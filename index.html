@@ -14,6 +14,7 @@
 :root {
   --cream: #FBFAF7;           /* the white: all text, wordmark, cue */
   --black: #131210;           /* the black: scrim, button, menu panel */
+  --cream-dark: #F1EFE9;      /* page slab showing between the cards */
   --cream-soft: rgba(251, 250, 247, .35);
   --display: "Bagel Fat One", "Titan One", cursive;
   --ui: "Archivo Narrow", "Arial Narrow", sans-serif;
@@ -26,20 +27,16 @@
 
 /* ---------- Base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
-html { background: var(--black); }
+html { background: var(--cream-dark); }
 html.menu-open { overflow: hidden; }
 body {
   margin: 0;
-  height: 100vh;
-  height: 100svh;
-  overflow: hidden;
-  background: var(--black);
+  height: auto;
+  overflow-x: clip;
+  background: var(--cream-dark);
   color: var(--cream);
   font-family: var(--ui);
   -webkit-font-smoothing: antialiased;
-}
-@supports not (height: 100svh) {
-  body { height: 100vh; }
 }
 a { color: inherit; }
 button { font: inherit; color: inherit; }
@@ -47,7 +44,8 @@ button { font: inherit; color: inherit; }
 /* ---------- Hero frame ---------- */
 .hero {
   position: relative;
-  height: 100%;
+  height: 100vh;
+  height: 100svh;
   width: min(100%, 480px);
   margin: 0 auto;
   overflow: clip;
@@ -179,7 +177,10 @@ button { font: inherit; color: inherit; }
   font-size: calc(var(--u) * 4.4);
   letter-spacing: 0.02em;
   line-height: 1.2;
+  color: var(--cream);
+  text-decoration: none;
 }
+.cue:focus-visible { outline: 1px solid var(--cream); outline-offset: 4px; }
 .cue__track {
   position: relative;
   width: calc(var(--u) * 0.28);
@@ -278,8 +279,92 @@ button { font: inherit; color: inherit; }
   font-size: 1.1rem;
 }
 
+/* ---------- Text cards ---------- */
+.cards, .shot {
+  width: min(100%, 480px);
+  margin: calc(var(--u) * 1.5) auto 0;
+}
+.cards { display: grid; gap: calc(var(--u) * 1.5); }
+.card {
+  border-radius: calc(var(--u) * 3.5);
+  padding: calc(var(--u) * 13) calc(var(--u) * 5.5);
+}
+.card p {
+  font-family: var(--ui);
+  font-size: calc(var(--u) * 7.8);
+  line-height: 1.13;
+  letter-spacing: 0.005em;
+  text-align: left;
+  text-wrap: pretty;
+  margin: 0;
+}
+.card--dark  { background: var(--black); color: var(--cream-dark); }
+.card--light { background: var(--cream); color: var(--black); }
+
+/* ---------- Photo card with marquee ---------- */
+.shot {
+  position: relative;
+  aspect-ratio: 1254 / 1342;
+  border-radius: calc(var(--u) * 3.5);
+  overflow: clip;
+  background: var(--black);
+  margin-bottom: calc(var(--u) * 1.5);
+}
+.shot img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+  filter: brightness(.52) saturate(.9) contrast(1.06);
+}
+/* Velo oscuro: el interior es muy claro y el texto crema necesita fondo oscuro,
+   igual que en la referencia (allí la foto ya era oscura) */
+.shot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: rgba(19, 18, 16, 0.34);
+}
+.marquee {
+  position: absolute;
+  z-index: 2;
+  left: 0; right: 0; top: 50%;
+  transform: translateY(-50%) rotate(-4deg);
+  overflow: clip;
+}
+.marquee__row {
+  display: flex;
+  width: max-content;
+  white-space: nowrap;
+  animation: slide 48s linear infinite;
+}
+.marquee__copy {
+  display: inline-block;
+  font-family: var(--display);
+  color: var(--cream);
+  font-size: calc(var(--u) * 26);
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+}
+.marquee__copy .g { display: inline-block; }
+@keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ---------- Scroll reveal ---------- */
+.js .card, .js .shot {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 700ms cubic-bezier(0.22,1,0.36,1), transform 700ms cubic-bezier(0.22,1,0.36,1);
+}
+.js .card--light { transition-delay: 80ms; }
+.js .card.is-in, .js .shot.is-in { opacity: 1; transform: none; }
+
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
+  .marquee__row { animation: none; }
+  .js .card, .js .shot { opacity: 1; transform: none; transition: none; }
   .cue__fill { animation: none; height: 55%; }
   .menu, .menu.is-open, .menu__nav a { transition: none; }
 }
@@ -310,12 +395,27 @@ button { font: inherit; color: inherit; }
       <p>Bilbao . <b class="clock">09:00</b></p>
       <p>horario 09:00 – 15:00</p>
     </div>
-    <div class="cue" aria-hidden="true">
-      <div class="cue__track"><div class="cue__fill"></div></div>
+    <a class="cue" href="#carta" aria-label="Bajar a la carta">
+      <div class="cue__track" aria-hidden="true"><div class="cue__fill"></div></div>
       <span>desliza</span>
-    </div>
+    </a>
   </div>
 </header>
+
+<div class="cards" id="carta">
+  <section class="card card--dark"><p>café cuando lo necesitas, comida cuando tienes hambre, algo dulce porque obviamente, y un sitio agradable donde estar mientras el día se aclara.</p></section>
+  <section class="card card--light"><p>café de especialidad, molienda fresca, tueste cuidado, origen con criterio, quien es del café lo entiende. los demás se toman un café buenísimo.</p></section>
+</div>
+
+<section class="shot" id="galeria" aria-label="coco latte, el local">
+  <img src="img/interior.jpg" alt="Interior del local coco latte en Bilbao" loading="lazy" decoding="async">
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__row">
+      <span class="marquee__copy" data-text="coco latte · coco latte · coco latte · coco latte · ">coco latte · coco latte · coco latte · coco latte · </span>
+      <span class="marquee__copy" data-text="coco latte · coco latte · coco latte · coco latte · " aria-hidden="true">coco latte · coco latte · coco latte · coco latte · </span>
+    </div>
+  </div>
+</section>
 
 <div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menú">
   <div class="menu__inner">
@@ -437,7 +537,18 @@ button { font: inherit; color: inherit; }
     });
   }
 
-  function layout() { fit(); fitLogos(); }
+  /* ----- Marquee: arch each copy, normalised over its own glyphs ----- */
+  var copies = Array.prototype.slice.call(document.querySelectorAll('.marquee__copy')).map(function (c) {
+    return { el: c, glyphs: wrap(c, c.dataset.text.replace(/ /g, ' ')) };
+  });
+  function fitMarquee() {
+    copies.forEach(function (c) {
+      c.glyphs.forEach(function (g) { g.style.transform = 'none'; });
+      if (!reduce) arc(c.glyphs, c.el, 1);
+    });
+  }
+
+  function layout() { fit(); fitLogos(); fitMarquee(); }
   layout();
 
   var timer;
@@ -466,6 +577,18 @@ button { font: inherit; color: inherit; }
         ], { duration: 650, delay: i * 45, easing: EASE, fill: 'backwards' });
       });
     });
+  }
+
+  /* ----- Reveal on scroll (once) ----- */
+  var revealEls = document.querySelectorAll('.card, .shot');
+  if ('IntersectionObserver' in window) {
+    document.documentElement.classList.add('js');
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(function (el) { io.observe(el); });
   }
 
   /* ----- Live time, Europe/Madrid ----- */
