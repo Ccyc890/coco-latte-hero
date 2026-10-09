@@ -280,7 +280,7 @@ button { font: inherit; color: inherit; }
 }
 
 /* ---------- Text cards ---------- */
-.cards, .shot, .news, .promo {
+.cards, .shot, .news, .promo, .float {
   width: min(100%, 480px);
   margin: calc(var(--u) * 1.5) auto 0;
 }
@@ -400,19 +400,52 @@ button { font: inherit; color: inherit; }
 .promo__line--hard { font-weight: 500; font-size: calc(var(--u)*5.0); color: var(--cream);
                      bottom: calc(var(--u)*3.6); }
 
+/* ---------- Flotantes ---------- */
+.float {
+  position: relative; overflow: clip; container-type: size;
+  aspect-ratio: 1252 / 1759;
+  margin-bottom: calc(var(--u) * 3.5);
+  border-radius: calc(var(--u) * 3.5);
+  background: var(--cream-dark);
+}
+.float::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 1500'%3E%3Cg fill='none' stroke='rgba(19,18,16,.07)' stroke-width='1.5'%3E%3Cpath d='M655 720Q675 760 668 808Q660 856 629 884Q598 912 565 923Q532 935 501 927Q471 919 438 912Q406 906 372 881Q337 857 333 809Q329 760 343 717Q356 674 379 642Q403 609 435 598Q468 586 501 580Q534 575 565 593Q595 612 615 646Q635 680 655 720Z'/%3E%3Cpath d='M694 708Q713 760 700 816Q687 872 660 919Q633 967 592 1002Q551 1037 500 1036Q449 1035 399 1014Q349 994 323 938Q297 881 308 820Q318 760 322 708Q326 656 344 601Q363 547 405 509Q447 471 501 463Q556 455 596 503Q635 551 655 603Q676 655 694 708Z'/%3E%3Cpath d='M764 688Q787 760 782 843Q778 926 733 989Q689 1053 624 1068Q559 1083 499 1090Q438 1097 384 1061Q329 1025 304 959Q278 893 253 826Q228 760 232 681Q236 602 271 531Q306 459 368 419Q430 379 493 415Q557 451 600 494Q644 537 693 576Q741 616 764 688Z'/%3E%3Cpath d='M859 652Q855 760 809 838Q762 916 726 986Q690 1056 631 1104Q572 1151 496 1172Q420 1194 341 1161Q263 1128 228 1036Q193 943 175 851Q158 760 172 666Q186 573 247 518Q309 463 370 423Q431 383 502 370Q574 357 649 384Q725 411 793 478Q862 544 859 652Z'/%3E%3Cpath d='M885 658Q926 760 915 880Q903 1000 831 1081Q759 1162 673 1197Q587 1232 506 1200Q425 1167 352 1135Q280 1102 189 1051Q99 999 74 880Q49 760 84 646Q118 532 185 454Q252 375 336 353Q421 330 503 313Q586 295 669 332Q752 369 798 462Q844 555 885 658Z'/%3E%3Cpath d='M968 639Q1030 760 994 897Q958 1033 874 1121Q789 1208 690 1234Q592 1260 504 1241Q415 1221 312 1217Q208 1213 118 1127Q29 1041 21 900Q14 760 41 631Q68 502 144 414Q220 325 312 283Q404 240 503 225Q601 210 684 279Q766 347 836 433Q906 518 968 639Z'/%3E%3Cpath d='M1021 613Q1048 760 1002 896Q957 1032 888 1144Q820 1257 713 1295Q606 1334 501 1328Q397 1321 270 1317Q143 1313 51 1198Q-42 1083 -48 921Q-55 760 -6 624Q44 488 136 413Q229 339 311 260Q393 180 510 128Q626 76 733 153Q841 231 918 348Q994 465 1021 613Z'/%3E%3C/g%3E%3C/svg%3E") center / cover no-repeat;
+}
+.float__blob { position: absolute; left: 12%; right: 14%; top: 7%; bottom: 6%; border-radius: 50% / 46%; background: #E7E3D9; }
+.float__title {
+  position: absolute; z-index: 1; left: 34%; width: 32%; top: 14%; margin: 0; text-align: center;
+  font-family: var(--display); font-weight: 400; color: var(--black);
+  font-size: calc(var(--u)*4.9); line-height: 1.06; letter-spacing: -0.01em;
+}
+.float__item { position: absolute; z-index: 2; margin: 0; will-change: transform; }
+.float__item img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: calc(var(--u)*2.2); }
+.float__item figcaption {
+  font-family: var(--ui); font-weight: 500; text-transform: uppercase; letter-spacing: .09em;
+  font-size: calc(var(--u)*2.5); line-height: 1.5; color: rgba(19,18,16,.72);
+  margin: calc(var(--u)*2.2) 0 0;
+}
+.float__item--a { left: 68%; top: 8%;  width: 28%; }
+.float__item--a img { aspect-ratio: 4 / 3; }
+.float__item--b { left: 5%;  top: 34%; width: 27%; }
+.float__item--b img { aspect-ratio: 3 / 4; }
+.float__item--b figcaption { position: absolute; left: -1.5cqw; top: 27cqh; width: 30cqw; margin: 0; }
+.float__item--c { left: 60%; top: 86%; width: 28%; }
+.float__item--c img { aspect-ratio: 4 / 3; }
+
 /* ---------- Scroll reveal ---------- */
-.js .card, .js .shot, .js .promo__photo {
+.js .card, .js .shot, .js .promo__photo, .js .float {
   opacity: 0;
   transform: translateY(18px);
   transition: opacity 700ms cubic-bezier(0.22,1,0.36,1), transform 700ms cubic-bezier(0.22,1,0.36,1);
 }
 .js .card--light, .js .promo__photo--bottom { transition-delay: 80ms; }
-.js .card.is-in, .js .shot.is-in, .js .promo__photo.is-in { opacity: 1; transform: none; }
+.js .card.is-in, .js .shot.is-in, .js .promo__photo.is-in, .js .float.is-in { opacity: 1; transform: none; }
 
 /* ---------- Desktop ---------- */
 @media (min-width: 1024px) {
   :root { --u: min(1vw, 16px); }          /* la página crece con la ventana y se topa */
-  .hero, .cards, .shot, .news, .promo { width: 100%; max-width: 1600px; margin-inline: auto; }
+  .hero, .cards, .shot, .news, .promo, .float { width: 100%; max-width: 1600px; margin-inline: auto; }
   .cards { grid-template-columns: 1fr 1fr; }
   .shot  { aspect-ratio: 21 / 9; }
   .news .card--news { display: grid; grid-template-columns: 0.95fr 1.05fr; column-gap: calc(var(--u)*5); align-items: start; }
@@ -422,7 +455,15 @@ button { font: inherit; color: inherit; }
   .promo { grid-template-columns: 1fr 1fr; }
   .promo__photo { aspect-ratio: 4 / 5; }
 
-  .card, .shot, .promo__photo { border-radius: calc(var(--u) * 2); }
+  .card, .shot, .promo__photo, .float { border-radius: calc(var(--u) * 2); }
+  .float { aspect-ratio: 16 / 9; }
+  .float__blob { left: 20%; right: 22%; top: 8%; bottom: 8%; }
+  .float__title { left: 27%; width: 26%; top: 22%; font-size: calc(var(--u)*3.2); }
+  .float__item--a { left: 62%; top: 8%;  width: 20%; }
+  .float__item--b { left: 6%;  top: 27%; width: 19%; }
+  .float__item--c { left: 55%; top: 74%; width: 20%; }
+  .float__item figcaption { font-size: calc(var(--u)*1.5); }
+  .float__item--b figcaption { position: static; width: auto; margin: calc(var(--u)*2.2) 0 0; }
   .card, .card--news { padding: calc(var(--u) * 7) var(--inset); }
   .logo { font-size: calc(var(--u) * 1.6); }
   .menu-btn { width: calc(var(--u) * 2.6); height: calc(var(--u) * 2.6); }
@@ -447,8 +488,8 @@ button { font: inherit; color: inherit; }
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   .marquee__row { animation: none; }
-  .hero__img, .shot img, .promo__photo img { transform: none !important; }
-  .js .card, .js .shot, .js .promo__photo { opacity: 1; transform: none; transition: none; }
+  .hero__img, .shot img, .promo__photo img, .float__item { transform: none !important; }
+  .js .card, .js .shot, .js .promo__photo, .js .float { opacity: 1; transform: none; transition: none; }
   .cue__fill { animation: none; height: 55%; }
   .menu, .menu.is-open, .menu__nav a { transition: none; }
 }
@@ -522,6 +563,23 @@ button { font: inherit; color: inherit; }
     </figcaption>
   </figure>
 </div>
+
+<section class="float" id="flotantes" aria-label="coco latte, en imágenes">
+  <div class="float__blob" aria-hidden="true"></div>
+  <h2 class="float__title">cuando<br>algo ya<br>está bien<br>hecho,<br>no lo<br>cambiamos:<br>lo mostramos.</h2>
+
+  <figure class="float__item float__item--a" data-float="-12">
+    <img src="img/takeaway-cup.jpg" alt="Café para llevar de coco latte" loading="lazy" decoding="async">
+    <figcaption>el café no se inventa. se respeta.</figcaption>
+  </figure>
+  <figure class="float__item float__item--b" data-float="9">
+    <img src="img/interior.jpg" alt="Interior del local coco latte" loading="lazy" decoding="async">
+    <figcaption>coco latte no existe para reinventar, sino para respetar.</figcaption>
+  </figure>
+  <figure class="float__item float__item--c" data-float="-16">
+    <img src="img/hero-cup.jpg" alt="Café de especialidad de coco latte" loading="lazy" decoding="async">
+  </figure>
+</section>
 
 <div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menú">
   <div class="menu__inner">
@@ -655,7 +713,7 @@ button { font: inherit; color: inherit; }
   }
 
   /* ----- Reveal on scroll (once) ----- */
-  var revealEls = document.querySelectorAll('.card, .shot, .promo__photo');
+  var revealEls = document.querySelectorAll('.card, .shot, .promo__photo, .float');
   if ('IntersectionObserver' in window) {
     document.documentElement.classList.add('js');
     var io = new IntersectionObserver(function (entries) {
@@ -673,7 +731,9 @@ button { font: inherit; color: inherit; }
     var im = f && f.querySelector(pair[1]);
     if (im) plx.push({ f: f, im: im });
   });
-  if (!reduce && plx.length) {
+  var floats = Array.prototype.slice.call(document.querySelectorAll('.float__item'));
+  var floatSec = document.getElementById('flotantes');
+  if (!reduce && (plx.length || floats.length)) {
     var plxQueued = false;
     var plxRun = function () {
       plxQueued = false;
@@ -690,6 +750,17 @@ button { font: inherit; color: inherit; }
       }
       for (i = 0; i < plx.length; i++) {                                              // write
         if (ys[i] !== null) plx[i].im.style.transform = 'translate3d(0,' + ys[i].toFixed(2) + 'px,0)';
+      }
+      if (floatSec) {                                                                 // flotantes: one section rect, per-tile factor
+        var fr = floatSec.getBoundingClientRect();                                    // read
+        if (fr.bottom >= 0 && fr.top <= vh) {
+          p = Math.min(1, Math.max(0, (vh - fr.top) / (vh + fr.height)));
+          t = (p - 0.5) * 2;
+          s = t * (1 - 0.35 * t * t);
+          for (i = 0; i < floats.length; i++) {                                       // write
+            floats[i].style.transform = 'translate3d(0,' + (s * fr.height * (parseFloat(floats[i].dataset.float) / 100)).toFixed(2) + 'px,0)';
+          }
+        }
       }
     };
     var plxSchedule = function () {
