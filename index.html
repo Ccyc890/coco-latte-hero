@@ -405,7 +405,7 @@ button { font: inherit; color: inherit; }
 /* ---------- Flotantes ---------- */
 .float {
   position: relative; overflow: clip; container-type: size;
-  aspect-ratio: 1252 / 1759;
+  aspect-ratio: 1252 / 1759; min-height: 150svh;
   margin-bottom: calc(var(--u) * 3.5);
   border-radius: calc(var(--u) * 3.5);
   background: var(--cream-dark);
@@ -427,12 +427,12 @@ button { font: inherit; color: inherit; }
   font-size: calc(var(--u)*2.5); line-height: 1.5; color: rgba(19,18,16,.72);
   margin: calc(var(--u)*2.2) 0 0; text-align: center;
 }
-.float__item--a { left: 68%; top: 4%;  width: 28%; }
+.float__item--a { left: 68%; top: 24%; width: 28%; }
 .float__item--a img { aspect-ratio: 4 / 3; }
-.float__item--b { left: 5%;  top: 27%; width: 27%; }
+.float__item--b { left: 5%;  top: 43%; width: 27%; }
 .float__item--b img { aspect-ratio: 3 / 4; }
-.float__item--b figcaption { position: absolute; left: -1.5cqw; top: 27cqh; width: 30cqw; margin: 0; text-align: center; }
-.float__item--c { left: 60%; top: 75%; width: 28%; }
+.float__item--b figcaption { position: relative; width: 100%; margin: calc(var(--u)*2.2) 0 0; text-align: center; }
+.float__item--c { left: 60%; top: 76%; width: 28%; }
 .float__item--c img { aspect-ratio: 4 / 3; }
 
 /* ---------- Scroll reveal ---------- */
@@ -464,12 +464,12 @@ button { font: inherit; color: inherit; }
   .promo__photo { aspect-ratio: 4 / 5; }
 
   .card, .shot, .promo__photo, .float { border-radius: calc(var(--u) * 2); }
-  .float { aspect-ratio: 16 / 9; }
+  .float { aspect-ratio: 16 / 9; min-height: 150svh; }
   .float__blob { left: 20%; right: 22%; top: 8%; bottom: 8%; }
   .float__title { left: 27%; width: 26%; font-size: calc(var(--u)*3.2); }
-  .float__item--a { left: 62%; top: 4%;  width: 20%; }
-  .float__item--b { left: 6%;  top: 21%; width: 19%; }
-  .float__item--c { left: 55%; top: 64%; width: 20%; }
+  .float__item--a { left: 62%; top: 24%; width: 20%; }
+  .float__item--b { left: 6%;  top: 43%; width: 19%; }
+  .float__item--c { left: 55%; top: 76%; width: 20%; }
   .float__item figcaption { font-size: calc(var(--u)*1.5); }
   .float__item--b figcaption { position: static; width: auto; margin: calc(var(--u)*2.2) 0 0; }
   .card, .card--news { padding: calc(var(--u) * 7) var(--inset); }
@@ -539,15 +539,15 @@ button { font: inherit; color: inherit; }
   <div class="float__blob" aria-hidden="true"></div>
   <h2 class="float__title">cuando<br>algo ya<br>está bien<br>hecho,<br>no lo<br>cambiamos:<br>lo mostramos.</h2>
 
-  <figure class="float__item float__item--a" data-float="-7">
+  <figure class="float__item float__item--a" data-float="-12">
     <img src="img/takeaway-cup.jpg" alt="Café para llevar de coco latte" loading="lazy" decoding="async">
     <figcaption>el café no se inventa. se respeta.</figcaption>
   </figure>
-  <figure class="float__item float__item--b" data-float="-10">
+  <figure class="float__item float__item--b" data-float="-16">
     <img src="img/interior.jpg" alt="Interior del local coco latte" loading="lazy" decoding="async">
     <figcaption>coco latte no existe para reinventar, sino para respetar.</figcaption>
   </figure>
-  <figure class="float__item float__item--c" data-float="-13">
+  <figure class="float__item float__item--c" data-float="-20">
     <img src="img/hero-cup.jpg" alt="Café de especialidad de coco latte" loading="lazy" decoding="async">
   </figure>
 </section>
