@@ -1,572 +1,503 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>coco latte — café de especialidad · Bilbao</title>
-<meta name="description" content="coco latte, cafetería de barrio en Bilbao: café de especialidad y comida fresca.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>coco latte — cafetería de barrio en Bilbao</title>
+<meta name="description" content="coco latte: una cafetería de barrio para café de especialidad y comida fresca en Bilbao.">
+<meta name="theme-color" content="#131210">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;700&family=Bagel+Fat+One&display=swap" rel="stylesheet">
 <style>
-/* ==========================================================
-   coco latte — hero móvil
-   Paleta: blanco sofisticado + negro sofisticado, nada más.
-   ========================================================== */
-
+/* ---------- Tokens ---------- */
 :root {
-  /* Paleta */
-  --cream: #FBFAF7;
-  --black: #131210;
-  --cream-dark: #F1EFE9;
-  --text-muted: #6e6a63;
-  --hairline: rgba(19, 18, 16, 0.14);
-  --hairline-light: rgba(251, 250, 247, 0.16);
-
-  /* Tipografía */
-  --serif: "Instrument Serif", "Times New Roman", serif;
-  --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
-
-  /* Medidas */
-  --gutter-x: 6vw;
-  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --cream: #FBFAF7;           /* the white: all text, wordmark, cue */
+  --black: #131210;           /* the black: scrim, button, menu panel */
+  --cream-soft: rgba(251, 250, 247, .35);
+  --display: "Bagel Fat One", "Titan One", cursive;
+  --ui: "Archivo Narrow", "Arial Narrow", sans-serif;
+  --u: 1vw;                   /* 1% of the frame width */
+  --gutter: calc(var(--u) * 3.2);
 }
-
-@media (min-width: 720px) {
-  :root { --gutter-x: 4vw; }
+@media (min-width: 768px) {
+  :root { --u: 4.8px; }       /* frame capped at 480px */
 }
 
 /* ---------- Base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
-
-html {
-  -webkit-text-size-adjust: 100%;
-  scroll-behavior: smooth;
-}
-
+html { background: var(--black); }
+html.menu-open { overflow: hidden; }
 body {
   margin: 0;
-  background: var(--cream);
-  color: var(--black);
-  font-family: var(--sans);
-  font-weight: 400;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  background: var(--black);
+  color: var(--cream);
+  font-family: var(--ui);
   -webkit-font-smoothing: antialiased;
-  overflow-x: clip;
 }
+@supports not (height: 100svh) {
+  body { height: 100vh; }
+}
+a { color: inherit; }
+button { font: inherit; color: inherit; }
 
-h1, p, ul { margin: 0; padding: 0; }
-ul { list-style: none; }
-a { color: inherit; text-decoration: none; }
-img { display: block; max-width: 100%; }
-button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
-
-:focus-visible { outline: 1px solid var(--black); outline-offset: 3px; }
-
-/* ---------- Hero ---------- */
+/* ---------- Hero frame ---------- */
 .hero {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow: clip;
-  background: var(--cream);
-}
-@supports (min-height: 100svh) {
-  .hero { min-height: 100svh; }
-}
-
-/* Columna de contenido centrada */
-.hero__col {
-  flex: 1 1 auto;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  padding: 0 var(--gutter-x);
-  min-height: 0;
-}
-@media (min-width: 768px) {
-  .hero__col { width: min(100%, 560px); }
-}
-
-/* Barra superior */
-.topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem 0 0.5rem;
-}
-
-.brand {
-  font-family: var(--sans);
-  font-size: 0.82rem;
-  letter-spacing: 0.16em;
-  text-transform: lowercase;
-  color: var(--black);
-}
-
-.menu-btn {
   position: relative;
-  width: 44px;
-  height: 44px;
-  border: 1px solid var(--black);
-  border-radius: 50%;
-}
-.menu-btn span {
-  position: absolute;
-  left: 13px;
-  right: 13px;
-  height: 1px;
+  height: 100%;
+  width: min(100%, 480px);
+  margin: 0 auto;
+  overflow: clip;
   background: var(--black);
 }
-.menu-btn span:nth-child(1) { top: 18px; }
-.menu-btn span:nth-child(2) { top: 25px; }
-
-/* Wordmark */
-.wordmark {
-  font-family: var(--serif);
-  font-weight: 400;
-  text-transform: lowercase;
-  text-align: center;
-  font-size: clamp(4.2rem, 24vw, 9rem);
-  line-height: 0.92;
-  letter-spacing: -0.02em;
-  margin: clamp(1.25rem, 5vh, 2.5rem) 0 clamp(1.5rem, 5vh, 2.75rem);
-  color: var(--black);
-}
-.wordmark__line { display: block; }
-.wordmark__char { display: inline-block; will-change: transform, opacity, filter; }
-
-/* Banda de foto */
-.photo {
-  position: relative;
-  flex: 1 1 auto;
-  min-height: 34svh;
-  border-radius: 4px;
-  overflow: clip;
-  background: var(--cream-dark);
-}
-@supports not (min-height: 1svh) {
-  .photo { min-height: 34vh; }
-}
-/* Pantallas altas/anchas: la columna se estrecha y la banda encoge para que
-   la fila inferior y la señal de deslizar quepan sin recortarse. */
-@media (min-width: 1024px) {
-  .photo { min-height: 24vh; }
-}
-/* El marco es un 10 % más alto que la banda: el paralaje nunca deja huecos */
-.photo__frame {
+.hero__img {
   position: absolute;
-  left: 0;
-  right: 0;
-  top: -5%;
-  height: 110%;
-}
-.photo img {
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 42%;
-  will-change: transform, opacity;
+  object-position: center 32%;
+  filter: brightness(.66) saturate(.9) contrast(1.06);
+}
+.hero__scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg,
+    rgba(19,18,16,.50) 0%, rgba(19,18,16,.20) 30%,
+    rgba(19,18,16,.34) 55%, rgba(19,18,16,.78) 100%);
 }
 
-/* Lema */
-.tagline {
-  text-align: center;
-  font-size: clamp(0.95rem, 4.1vw, 1.25rem);
-  line-height: 1.35;
-  max-width: 30ch;
-  margin: 1.5rem auto 1.5rem;
-  color: var(--black);
-}
-@media (min-width: 768px) {
-  .tagline { font-size: 1.1rem; }
-}
-
-/* Fila inferior */
-.hero__foot {
+/* ---------- Top bar ---------- */
+.bar {
+  position: absolute;
+  top: calc(var(--u) * 2.6);
+  left: var(--gutter);
+  right: var(--gutter);
+  z-index: 3;
   display: flex;
-  align-items: flex-end;
   justify-content: space-between;
-  gap: 1rem;
-  padding: 0 0 1.25rem;
-  font-size: 0.72rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--text-muted);
+  align-items: center;
 }
-.hero__foot p + p { margin-top: 0.4rem; }
+.logo {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: calc(var(--u) * 6.6);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: var(--cream);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.logo .g { display: inline-block; }
+.menu-btn {
+  appearance: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  width: calc(var(--u) * 8.2);
+  height: calc(var(--u) * 8.2);
+  border-radius: 30%;
+  background: var(--black);
+  display: grid;
+  place-items: center;
+}
+.menu-btn::after {
+  content: "";
+  width: 26%;
+  height: 26%;
+  border-radius: 50%;
+  background: var(--cream);
+}
+:focus-visible { outline: 2px solid var(--cream); outline-offset: 3px; }
 
+/* ---------- Giant wordmark ---------- */
+.stack {
+  position: absolute;
+  top: 26%;
+  left: var(--gutter);
+  right: var(--gutter);
+  z-index: 2;
+}
+.wordmark {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 400;
+  text-transform: lowercase;
+  color: var(--cream);
+  text-align: center;
+  line-height: 0.86;
+  letter-spacing: -0.015em;
+}
+.wordmark .line {
+  display: block;
+  width: max-content;
+  margin-inline: auto;
+  white-space: nowrap;
+  font-size: calc(var(--u) * 26);        /* fallback if JS never runs */
+  transform-origin: 50% 50%;
+}
+.wordmark .line > span { display: inline-block; }
+.wordmark .g { display: inline-block; will-change: transform; }
+
+/* ---------- Tagline ---------- */
+.tagline {
+  margin: max(calc(var(--u) * 3.2), 5vh) auto 0;
+  max-width: 92%;
+  text-align: center;
+  font-weight: 400;
+  font-size: calc(var(--u) * 6.1);
+  line-height: 1.27;
+}
+
+/* ---------- Bottom row ---------- */
+.foot {
+  position: absolute;
+  bottom: max(calc(var(--u) * 4.2), 5.5vh);
+  left: var(--gutter);
+  right: var(--gutter);
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.meta {
+  margin: 0;
+  font-size: calc(var(--u) * 4.9);
+  line-height: 1.2;
+}
+.meta p { margin: 0; }
+.meta b { font-weight: 700; }
 .cue {
   display: flex;
-  align-items: flex-end;
-  gap: 0.6rem;
-  min-height: 44px;
-  color: var(--text-muted);
-}
-.cue__word {
-  writing-mode: vertical-rl;
-  text-transform: uppercase;
-}
-.cue__line {
-  position: relative;
-  display: block;
-  width: 1px;
-  height: 36px;
-  background: var(--hairline);
-  overflow: hidden;
-}
-.cue__line::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 1px;
-  height: 60%;
-  background: var(--black);
-  animation: cue-fall 2.6s ease-in-out infinite;
-}
-@keyframes cue-fall {
-  0%   { transform: translateY(-100%); opacity: 0; }
-  25%  { opacity: 1; }
-  75%  { opacity: 1; }
-  100% { transform: translateY(170%); opacity: 0; }
-}
-
-/* ---------- Sección #local ---------- */
-.local {
-  background: var(--black);
-  color: var(--cream);
-  padding: clamp(3rem, 10vw, 5rem) var(--gutter-x);
-}
-.local__col {
-  width: 100%;
-  max-width: 560px;
-  margin: 0 auto;
-  display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 1.25rem;
+  align-items: flex-end;
+  gap: calc(var(--u) * 1.6);
+  font-size: calc(var(--u) * 4.4);
+  letter-spacing: 0.02em;
+  line-height: 1.2;
 }
-.local__brand {
-  font-size: 0.82rem;
-  letter-spacing: 0.16em;
-  text-transform: lowercase;
+.cue__track {
+  position: relative;
+  width: calc(var(--u) * 0.28);
+  min-width: 2px;
+  height: max(6.2vh, 34px);
+  background: var(--cream-soft);   /* lower translucent segment */
+  margin-right: 0.35em;            /* sits above the last letters */
 }
-.local__line {
-  font-size: clamp(0.95rem, 4.1vw, 1.25rem);
-  line-height: 1.35;
+.cue__fill {                        /* upper cream segment */
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 100%;
+  background: var(--cream);
+  animation: meter 2.4s ease-in-out infinite;
 }
-.local a {
-  align-self: flex-start;
-  letter-spacing: 0.06em;
-  text-underline-offset: 4px;
-  text-decoration: underline transparent;
-  transition: text-decoration-color 0.3s ease;
-}
-.local a:hover,
-.local a:focus-visible { text-decoration-color: var(--cream); }
-.local a:focus-visible { outline: 1px solid var(--cream); outline-offset: 4px; }
-.local__top {
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  color: rgba(251, 250, 247, 0.7);
-  padding-top: 1rem;
-  border-top: 1px solid var(--hairline-light);
-  width: 100%;
+@keyframes meter {
+  0%, 100% { height: 0; }
+  50% { height: 100%; }
 }
 
-/* ---------- Menú ---------- */
+/* ---------- Menu overlay ---------- */
 .menu {
   position: fixed;
   inset: 0;
-  z-index: 100;
-  display: flex;
-  flex-direction: column;
-  padding: 1rem var(--gutter-x) 1.5rem;
+  z-index: 10;
   background: var(--black);
   color: var(--cream);
-  opacity: 0;
   visibility: hidden;
-  transform: scale(1.02);
-  transition: opacity 380ms var(--ease), transform 380ms var(--ease), visibility 0s linear 380ms;
-  overflow-y: auto;
+  opacity: 0;
+  transition: opacity .3s ease, visibility 0s .3s;
 }
 .menu.is-open {
-  opacity: 1;
   visibility: visible;
-  transform: none;
-  transition-delay: 0s;
+  opacity: 1;
+  transition: opacity .3s ease;
 }
-.menu :focus-visible { outline: 1px solid var(--cream); outline-offset: 4px; }
-
 .menu__inner {
-  flex: 1 1 auto;
+  position: relative;
+  width: min(100%, 480px);
+  height: 100%;
+  margin: 0 auto;
+  padding: calc(var(--u) * 2.6) var(--gutter) calc(var(--u) * 4.2);
   display: flex;
   flex-direction: column;
-  width: 100%;
-  max-width: 560px;
-  margin: 0 auto;
 }
 .menu__top {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-}
-.menu__brand {
-  font-size: 0.82rem;
-  letter-spacing: 0.16em;
-  text-transform: lowercase;
+  align-items: center;
 }
 .menu__close {
-  position: relative;
+  appearance: none;
+  background: none;
+  border: 0;
+  cursor: pointer;
   width: 44px;
   height: 44px;
-  border: 1px solid var(--hairline-light);
-  border-radius: 50%;
+  position: relative;
+  margin-right: -6px;
 }
-.menu__close span {
+.menu__close::before, .menu__close::after {
+  content: "";
   position: absolute;
-  left: 13px;
-  right: 13px;
-  top: 21px;
-  height: 1px;
+  left: 11px; right: 11px; top: 50%;
+  height: 2px;
   background: var(--cream);
+  border-radius: 2px;
 }
-.menu__close span:nth-child(1) { transform: rotate(45deg); }
-.menu__close span:nth-child(2) { transform: rotate(-45deg); }
-
+.menu__close::before { transform: rotate(45deg); }
+.menu__close::after { transform: rotate(-45deg); }
 .menu__nav {
-  flex: 1 1 auto;
+  flex: 1;
   display: flex;
-  align-items: center;
-  padding: 2rem 0;
+  flex-direction: column;
+  justify-content: center;
+  gap: .1em;
 }
-.menu__link {
-  display: inline-block;
-  font-family: var(--serif);
-  font-size: clamp(2.4rem, 12vw, 4rem);
+.menu__nav a {
+  display: block;
+  font-family: var(--display);
+  font-size: clamp(2.2rem, 11vw, 4rem);
   line-height: 1.15;
+  text-decoration: none;
   opacity: 0;
-  transform: translateY(1.2rem);
-  transition: opacity 600ms var(--ease), transform 600ms var(--ease);
+  transform: translateY(24px);
+  transition: opacity .5s ease, transform .6s cubic-bezier(0.22,1,0.36,1);
 }
-.menu.is-open .menu__link {
-  opacity: 1;
-  transform: none;
-}
-.menu.is-open li:nth-child(1) .menu__link { transition-delay: 120ms; }
-.menu.is-open li:nth-child(2) .menu__link { transition-delay: 190ms; }
-.menu.is-open li:nth-child(3) .menu__link { transition-delay: 260ms; }
-.menu.is-open li:nth-child(4) .menu__link { transition-delay: 330ms; }
-
+.menu.is-open .menu__nav a { opacity: 1; transform: none; }
+.menu.is-open .menu__nav a:nth-child(2) { transition-delay: .06s; }
+.menu.is-open .menu__nav a:nth-child(3) { transition-delay: .12s; }
+.menu.is-open .menu__nav a:nth-child(4) { transition-delay: .18s; }
 .menu__foot {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding-top: 1rem;
-  border-top: 1px solid var(--hairline-light);
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  align-items: baseline;
+  font-size: 1.1rem;
 }
 
-/* ---------- Movimiento reducido ---------- */
+/* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  *, *::before, *::after {
-    animation: none !important;
-    transition: none !important;
-  }
-  /* Sin desplazamientos ni escalas (la × estática del botón se conserva) */
-  .menu, .menu__link, .wordmark__char, .photo img { transform: none !important; }
-  .menu__link { opacity: 1; }
-  .cue__line::after { opacity: 1; height: 100%; }
+  .cue__fill { animation: none; height: 55%; }
+  .menu, .menu.is-open, .menu__nav a { transition: none; }
 }
 </style>
 </head>
 <body>
 
-<main>
-  <section class="hero" id="inicio">
-    <div class="hero__col">
-      <header class="topbar">
-        <a class="brand" href="#inicio">coco latte</a>
-        <button class="menu-btn" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu">
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </button>
-      </header>
+<header class="hero">
+  <img class="hero__img" src="img/takeaway-cup.jpg" alt="Taza de café de especialidad con espuma de leche sobre mármol claro" fetchpriority="high">
+  <div class="hero__scrim"></div>
 
-      <h1 class="wordmark" aria-label="coco latte">
-        <span class="wordmark__line" aria-hidden="true">coco</span>
-        <span class="wordmark__line" aria-hidden="true">latte</span>
-      </h1>
+  <div class="bar">
+    <a class="logo" href="#" aria-label="coco latte" data-arc="0.4">coco latte</a>
+    <button class="menu-btn" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu"></button>
+  </div>
 
-      <div class="photo">
-        <div class="photo__frame">
-          <img src="img/hero-cup.jpg" width="1069" height="1600" loading="eager" decoding="async"
-               alt="Taza de café de especialidad con espuma de leche servida sobre una mesa clara">
-        </div>
-      </div>
+  <div class="stack">
+  <h1 class="wordmark" aria-label="coco latte">
+    <span class="line" data-text="coco"><span>coco</span></span>
+    <span class="line" data-text="latte"><span>latte</span></span>
+  </h1>
 
-      <p class="tagline">Una cafetería de barrio para café de especialidad, comida fresca, días que empiezan a solas, se vuelven encuentro, se desvían, y de algún modo terminan contigo todavía aquí.</p>
+  <p class="tagline">una cafetería de barrio para café de especialidad, comida fresca, días que empiezan a solas, se vuelven encuentro, se desvían, y de algún modo terminan contigo todavía aquí.</p>
+  </div>
 
-      <div class="hero__foot">
-        <div>
-          <p>Bilbao · <span id="reloj">09:00</span></p>
-          <p>Cocina 09:00 – 15:00</p>
-        </div>
-        <a class="cue" href="#local">
-          <span class="cue__word">desliza</span>
-          <span class="cue__line" aria-hidden="true"></span>
-        </a>
-      </div>
+  <div class="foot">
+    <div class="meta">
+      <p>Bilbao . <b class="clock">09:00</b></p>
+      <p>horario 09:00 – 15:00</p>
     </div>
-  </section>
-
-  <section class="local" id="local" aria-label="Local">
-    <div class="local__col">
-      <p class="local__brand">coco latte</p>
-      <p class="local__line">Bilbao, España · Cocina 09:00 – 15:00</p>
-      <a href="https://instagram.com/cocolatte.coffee" target="_blank" rel="noopener noreferrer">@cocolatte.coffee</a>
-      <a class="local__top" href="#inicio">Volver arriba</a>
+    <div class="cue" aria-hidden="true">
+      <div class="cue__track"><div class="cue__fill"></div></div>
+      <span>desliza</span>
     </div>
-  </section>
-</main>
+  </div>
+</header>
 
-<div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menú" aria-hidden="true">
+<div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menú">
   <div class="menu__inner">
     <div class="menu__top">
-      <span class="menu__brand">coco latte</span>
-      <button class="menu__close" type="button" aria-label="Cerrar menú">
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-      </button>
+      <a class="logo" href="#" aria-label="coco latte" data-arc="0.4">coco latte</a>
+      <button class="menu__close" type="button" aria-label="Cerrar menú"></button>
     </div>
     <nav class="menu__nav" aria-label="Principal">
-      <ul>
-        <li><a class="menu__link" href="#local">Carta</a></li>
-        <li><a class="menu__link" href="#local">Galería</a></li>
-        <li><a class="menu__link" href="#local">Ubicación</a></li>
-        <li><a class="menu__link" href="#local">Contacto</a></li>
-      </ul>
+      <a href="#carta">carta</a>
+      <a href="#galeria">galería</a>
+      <a href="#ubicacion">ubicación</a>
+      <a href="#contacto">contacto</a>
     </nav>
     <div class="menu__foot">
       <a href="https://instagram.com/cocolatte.coffee" target="_blank" rel="noopener noreferrer">@cocolatte.coffee</a>
-      <span>Español</span>
+      <span>español</span>
     </div>
   </div>
 </div>
 
 <script>
 (function () {
-  'use strict';
-
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var EASE = 'cubic-bezier(0.22,1,0.36,1)';
 
-  /* ---------- Reloj de Bilbao (Europe/Madrid) ---------- */
-  var reloj = document.getElementById('reloj');
-  function tick() {
-    try {
-      var fmt = new Intl.DateTimeFormat('es-ES', {
-        timeZone: 'Europe/Madrid', hour: '2-digit', minute: '2-digit', hour12: false
-      });
-      reloj.textContent = fmt.format(new Date());
-    } catch (e) { /* se mantiene el texto estático */ }
+  /* Wrap characters in spans; return the glyph list. */
+  function wrap(el, text) {
+    el.textContent = '';
+    var out = [];
+    text.split('').forEach(function (ch) {
+      var s = document.createElement('span');
+      s.className = 'g';
+      s.setAttribute('aria-hidden', 'true');
+      s.textContent = ch === ' ' ? ' ' : ch;
+      el.appendChild(s);
+      out.push(s);
+    });
+    return out;
   }
+
+  var frame = document.querySelector('.hero');
+
+  /* Arc: ends droop, middle rises. amp is the total excursion in px
+     (4.8% of the frame width); k scales it and the rotation. */
+  function arc(glyphs, host, k) {
+    var hr = host.getBoundingClientRect();
+    if (!hr.width) return;
+    var amp = frame.clientWidth * 0.048 * k;
+    var first = glyphs[0].getBoundingClientRect();
+    var last = glyphs[glyphs.length - 1].getBoundingClientRect();
+    var span = (last.left + last.width / 2) - (first.left + first.width / 2);
+    glyphs.forEach(function (g) {
+      var r = g.getBoundingClientRect();
+      /* t se normaliza entre el PRIMER y el ÚLTIMO glifo (±0,5), no sobre la caja
+         de la línea: así los extremos sí alcanzan la excursión completa del arco. */
+      var t = span ? ((r.left + r.width / 2) - (first.left + first.width / 2)) / span - 0.5 : 0;
+      var ty = amp * (1 - 4 * t * t) - amp / 2;      /* ends -amp/2, centre +amp/2 (up) */
+      g.style.transform = 'translateY(' + (-ty).toFixed(2) +
+        'px) rotate(' + (-8 * k * t).toFixed(3) + 'deg)';
+    });
+  }
+
+  var ctx = document.createElement('canvas').getContext('2d');
+
+  /* ----- Giant wordmark ----- */
+  var h1 = document.querySelector('.wordmark');
+  var lines = Array.prototype.slice.call(h1.querySelectorAll('.line'));
+  var lineGlyphs = lines.map(function (l) { return wrap(l.firstElementChild, l.dataset.text); });
+
+  function fit() {
+    var W = frame.clientWidth;
+    ctx.font = '100px "Bagel Fat One", cursive';
+    if ('letterSpacing' in ctx) ctx.letterSpacing = '0px';
+    var o = ctx.measureText('o');
+    var xH100 = o.actualBoundingBoxAscent + o.actualBoundingBoxDescent;
+    if (!xH100) return;
+    var F = 100 * (0.136 * W) / xH100;                    /* x-height = 13.6% of W */
+    lines.forEach(function (l, i) {
+      /* Glyphs are separate spans (no kerning) and each is rotated about its box
+         centre by the arc, so measure the rotated per-glyph ink, in 100px units. */
+      var sc = F / 100, ls = -1.5, chars = l.dataset.text.split('');
+      var adv = chars.map(function (ch) { return ctx.measureText(ch).width + ls; });
+      var A = adv.reduce(function (a, b) { return a + b; }, 0);
+      var inkL = Infinity, inkR = -Infinity, pos = 0;
+      chars.forEach(function (ch, j) {
+        var m = ctx.measureText(ch), cx = pos + adv[j] / 2;
+        var t = cx / A - 0.5, th = (-8 * t) * Math.PI / 180;
+        var mid = ((m.fontBoundingBoxAscent || 0) - (m.fontBoundingBoxDescent || 0)) / 2;
+        [-m.actualBoundingBoxLeft, m.actualBoundingBoxRight].forEach(function (xe) {
+          [m.actualBoundingBoxAscent - mid, -m.actualBoundingBoxDescent - mid].forEach(function (ye) {
+            var x = cx + (xe - adv[j] / 2) * Math.cos(th) + ye * Math.sin(th);
+            inkL = Math.min(inkL, x); inkR = Math.max(inkR, x);
+          });
+        });
+        pos += adv[j];
+      });
+      var inkW = (inkR - inkL) * sc;
+      if (inkW) {
+        var k = Math.min(1.6, Math.max(0.9, (0.876 * W) / inkW));   /* ink = 87.6% of W */
+        /* centre the ink on 5.9%..93.5% (centre 49.7%) */
+        var inkC = (inkR + inkL) / 2 * sc;
+        var dx = (0.497 - 0.5) * W - (inkC - A * sc / 2) * k;
+        l.style.fontSize = F.toFixed(2) + 'px';
+        l.style.transform = 'translateX(' + dx.toFixed(2) + 'px) scaleX(' + k.toFixed(4) + ')';
+      }
+      lineGlyphs[i].forEach(function (g) { g.style.transform = 'none'; });
+    });
+    lines.forEach(function (l, i) { arc(lineGlyphs[i], l.firstElementChild, 1); });
+  }
+
+  /* ----- Small logo ----- */
+  var logos = Array.prototype.slice.call(document.querySelectorAll('.logo')).map(function (a) {
+    return { el: a, glyphs: wrap(a, 'coco latte') };
+  });
+  function fitLogos() {
+    logos.forEach(function (l) {
+      l.glyphs.forEach(function (g) { g.style.transform = 'none'; });
+      arc(l.glyphs, l.el, 0.4);
+    });
+  }
+
+  function layout() { fit(); fitLogos(); }
+  layout();
+
+  var timer;
+  window.addEventListener('resize', function () {
+    clearTimeout(timer);
+    timer = setTimeout(layout, 120);
+  });
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(function () { layout(); intro(); });
+  } else {
+    intro();
+  }
+
+  /* ----- Entrance (final arched transform stays as resting state) ----- */
+  var played = false;
+  function intro() {
+    if (played) return;
+    played = true;
+    if (reduce || !Element.prototype.animate) return;
+    lineGlyphs.forEach(function (gl) {
+      gl.forEach(function (g, i) {
+        var rest = g.style.transform;
+        g.animate([
+          { transform: 'translateY(0.35em) scale(.86)', opacity: 0 },
+          { transform: rest, opacity: 1 }
+        ], { duration: 650, delay: i * 45, easing: EASE, fill: 'backwards' });
+      });
+    });
+  }
+
+  /* ----- Live time, Europe/Madrid ----- */
+  var clock = document.querySelector('.clock');
+  var fmt;
+  try {
+    fmt = new Intl.DateTimeFormat('es-ES', { timeZone: 'Europe/Madrid', hour: '2-digit', minute: '2-digit', hour12: false });
+  } catch (e) {}
+  function tick() { if (fmt) clock.textContent = fmt.format(new Date()); }
   tick();
   setInterval(tick, 30000);
 
-  /* ---------- Wordmark: aparición letra a letra ---------- */
-  var lines = document.querySelectorAll('.wordmark__line');
-  var chars = [];
-  if (!reduce && lines.length && 'animate' in Element.prototype) {
-    Array.prototype.forEach.call(lines, function (line) {
-      var text = line.textContent;
-      line.textContent = '';
-      for (var i = 0; i < text.length; i++) {
-        var s = document.createElement('span');
-        s.className = 'wordmark__char';
-        s.textContent = text.charAt(i);
-        line.appendChild(s);
-        chars.push(s);
-      }
-    });
-    chars.forEach(function (el, n) {
-      el.animate([
-        { opacity: 0, transform: 'translateY(0.35em)', filter: 'blur(10px)' },
-        { opacity: 1, transform: 'translateY(0)', filter: 'blur(0)' }
-      ], { duration: 700, delay: 80 + n * 60, easing: EASE, fill: 'backwards' });
-    });
-  }
-
-  /* ---------- Foto: asentado + paralaje en un solo transform ---------- */
-  var band = document.querySelector('.photo');
-  var img = band.querySelector('img');
-  var settle = reduce ? 1 : 0;   // 0 → 1 durante ~1200 ms
-  var ticking = false;
-
-  function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
-
-  function paint() {
-    ticking = false;
-    var r = band.getBoundingClientRect();
-    var vh = window.innerHeight || document.documentElement.clientHeight;
-    var y = 0;
-    if (!reduce) {
-      var t = ((r.top + r.height / 2) - vh / 2) / (vh / 2 + r.height / 2);
-      t = Math.max(-1, Math.min(1, t));
-      var e = Math.sin(t * Math.PI / 2);      // extremos suaves
-      y = -e * 0.05 * r.height;
-    }
-    var k = easeOut(settle);
-    var scale = 1.045 - 0.045 * k;
-    img.style.opacity = String(k);
-    img.style.transform = reduce ? 'none' : 'translate3d(0,' + y.toFixed(2) + 'px,0) scale(' + scale.toFixed(4) + ')';
-  }
-  function request() {
-    if (!ticking) { ticking = true; requestAnimationFrame(paint); }
-  }
-
-  if (reduce) {
-    paint();
-  } else {
-    var t0 = null;
-    img.style.opacity = '0';
-    (function step(now) {
-      if (t0 === null) t0 = now;
-      settle = Math.min(1, (now - t0) / 1200);
-      paint();
-      if (settle < 1) requestAnimationFrame(step);
-    })(performance.now());
-    window.addEventListener('scroll', request, { passive: true });
-    window.addEventListener('resize', request);
-  }
-
-  /* ---------- Menú ---------- */
+  /* ----- Menu ----- */
+  var btn = document.querySelector('.menu-btn');
   var menu = document.getElementById('menu');
-  var openBtn = document.querySelector('.menu-btn');
-  var closeBtn = document.querySelector('.menu__close');
-  var root = document.documentElement;
-
-  function setOpen(open) {
+  var closeBtn = menu.querySelector('.menu__close');
+  function setMenu(open) {
     menu.classList.toggle('is-open', open);
-    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
-    openBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    root.style.overflow = open ? 'hidden' : '';
-    if (open) closeBtn.focus({ preventScroll: true });
-    else openBtn.focus({ preventScroll: true });
+    document.documentElement.classList.toggle('menu-open', open);
+    btn.setAttribute('aria-expanded', String(open));
+    (open ? closeBtn : btn).focus();
   }
-
-  openBtn.addEventListener('click', function () { setOpen(true); });
-  closeBtn.addEventListener('click', function () { setOpen(false); });
-  Array.prototype.forEach.call(menu.querySelectorAll('.menu__link'), function (a) {
-    a.addEventListener('click', function () { setOpen(false); });
+  btn.addEventListener('click', function () { setMenu(true); });
+  closeBtn.addEventListener('click', function () { setMenu(false); });
+  menu.querySelectorAll('.menu__nav a, .menu__foot a').forEach(function (a) {
+    a.addEventListener('click', function () { setMenu(false); });
   });
-  document.addEventListener('keydown', function (ev) {
-    if (ev.key === 'Escape' && menu.classList.contains('is-open')) setOpen(false);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && menu.classList.contains('is-open')) setMenu(false);
   });
+  menu.querySelector('.logo').addEventListener('click', function (e) { e.preventDefault(); });
+  document.querySelector('.bar .logo').addEventListener('click', function (e) { e.preventDefault(); });
 })();
 </script>
 </body>
