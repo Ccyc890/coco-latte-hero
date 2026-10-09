@@ -8,7 +8,7 @@
 <meta name="theme-color" content="#131210">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;700&family=Oswald:wght@300;400;500;700&family=Bagel+Fat+One&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 /* ---------- Tokens ---------- */
 :root {
@@ -16,8 +16,8 @@
   --black: #131210;           /* the black: scrim, button, menu panel */
   --cream-dark: #F1EFE9;      /* page slab showing between the cards */
   --cream-soft: rgba(251, 250, 247, .35);
-  --display: "Bagel Fat One", "Titan One", cursive;
-  --ui: "Oswald", "Archivo Narrow", "Arial Narrow", sans-serif;
+  --display: "Instrument Serif", Georgia, "Times New Roman", serif;
+  --ui: "Inter", -apple-system, "Segoe UI", system-ui, sans-serif;
   --u: 1vw;                   /* 1% of the frame width */
   --gutter: calc(var(--u) * 3.2);
   --inset: calc(var(--u) * 3.6);   /* single horizontal inset */
@@ -84,14 +84,13 @@ button { font: inherit; color: inherit; }
 .logo {
   font-family: var(--display);
   font-weight: 400;
-  font-size: calc(var(--u) * 6.6);
+  font-size: calc(var(--u) * 7.4);
   line-height: 1;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.005em;
   color: var(--cream);
   text-decoration: none;
   white-space: nowrap;
 }
-.logo .g { display: inline-block; }
 .menu-btn {
   appearance: none;
   border: 0;
@@ -116,7 +115,7 @@ button { font: inherit; color: inherit; }
 /* ---------- Giant wordmark ---------- */
 .stack {
   position: absolute;
-  top: 26%;
+  top: 17%;
   left: var(--gutter);
   right: var(--gutter);
   z-index: 2;
@@ -128,7 +127,7 @@ button { font: inherit; color: inherit; }
   text-transform: lowercase;
   color: var(--cream);
   text-align: center;
-  line-height: 0.86;
+  line-height: 0.9;
   letter-spacing: -0.015em;
 }
 .wordmark .line {
@@ -136,8 +135,7 @@ button { font: inherit; color: inherit; }
   width: max-content;
   margin-inline: auto;
   white-space: nowrap;
-  font-size: calc(var(--u) * 26);        /* fallback if JS never runs */
-  transform-origin: 50% 50%;
+  font-size: calc(var(--u) * 28);        /* fallback if JS never runs */
 }
 .wordmark .line > span { display: inline-block; }
 .wordmark .g { display: inline-block; will-change: transform; }
@@ -148,8 +146,8 @@ button { font: inherit; color: inherit; }
   max-width: 92%;
   text-align: center;
   font-weight: 400;
-  font-size: calc(var(--u) * 6.1);
-  line-height: 1.27;
+  font-size: calc(var(--u) * 4.2);
+  line-height: 1.5;
 }
 
 /* ---------- Bottom row ---------- */
@@ -165,23 +163,23 @@ button { font: inherit; color: inherit; }
 }
 .meta {
   margin: 0;
-  font-size: calc(var(--u) * 4.9);
-  line-height: 1.2;
+  font-size: calc(var(--u) * 4.0);
+  line-height: 1.35;
 }
 .meta p { margin: 0; }
-.meta b { font-weight: 700; }
+.meta b { font-weight: 500; }
 .cue {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   gap: calc(var(--u) * 1.6);
-  font-size: calc(var(--u) * 4.4);
   letter-spacing: 0.02em;
   line-height: 1.2;
   color: var(--cream);
   text-decoration: none;
 }
 .cue:focus-visible { outline: 1px solid var(--cream); outline-offset: 4px; }
+.cue span { font-size: calc(var(--u) * 4.0); }
 .cue__track {
   position: relative;
   width: calc(var(--u) * 0.28);
@@ -262,7 +260,7 @@ button { font: inherit; color: inherit; }
 .menu__nav a {
   display: block;
   font-family: var(--display);
-  font-size: clamp(2.2rem, 11vw, 4rem);
+  font-size: calc(var(--u) * 7.5);
   line-height: 1.15;
   text-decoration: none;
   opacity: 0;
@@ -292,9 +290,8 @@ button { font: inherit; color: inherit; }
 }
 .card p {
   font-family: var(--ui);
-  font-size: calc(var(--u) * 7.8);
-  line-height: 1.13;
-  letter-spacing: 0.005em;
+  font-size: calc(var(--u) * 4.4);
+  line-height: 1.45;
   text-align: left;
   text-wrap: pretty;
   margin: 0;
@@ -350,24 +347,23 @@ button { font: inherit; color: inherit; }
   line-height: 1.3;
   letter-spacing: -0.02em;
 }
-.marquee__copy .g { display: inline-block; }
 @keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
 /* ---------- Novedades ---------- */
 .card--news { background: var(--black); color: var(--cream); padding: calc(var(--u)*13) var(--inset); }
 .card-news__title {
-  font-family: var(--ui); font-weight: 400;
-  font-size: calc(var(--u) * 21); line-height: 1.28; letter-spacing: -0.01em;
-  margin: 0 0 calc(var(--u)*6); white-space: nowrap;
+  font-family: var(--display); font-weight: 400;
+  font-size: calc(var(--u) * 16); line-height: 1; letter-spacing: -0.01em;
+  margin: 0 0 calc(var(--u)*6); white-space: nowrap; min-width: 0;
 }
 .card .card-news__text {
   font-family: var(--ui); font-weight: 300;
-  font-size: calc(var(--u) * 4.9); line-height: 1.18; text-wrap: pretty;
+  font-size: calc(var(--u) * 4.0); line-height: 1.5; text-wrap: pretty;
   max-width: 90%; margin: 0 0 calc(var(--u)*9);
 }
 .pill {
   position: relative; display: inline-flex; align-items: center; gap: calc(var(--u)*2);
-  font-family: var(--ui); font-weight: 400; font-size: calc(var(--u)*5);
+  font-family: var(--ui); font-weight: 500; font-size: calc(var(--u)*4.4);
   color: var(--cream); text-decoration: none; white-space: nowrap;
   padding: calc(var(--u)*2.4) calc(var(--u)*4.4);
   border-radius: calc(var(--u)*2.4);
@@ -393,13 +389,13 @@ button { font: inherit; color: inherit; }
 .promo__photo--bottom::after { content:""; position:absolute; inset:0; z-index:1; background: rgba(19,18,16,.30); }
 .promo__caption { position: absolute; z-index: 2; inset: 0; padding: var(--inset); }
 .promo__big {
-  font-family: var(--ui); font-weight: 400; color: var(--cream);
-  font-size: calc(var(--u)*8.5); line-height: 1; white-space: nowrap; margin: 0;
+  font-family: var(--display); font-weight: 400; color: var(--cream);
+  font-size: calc(var(--u)*10); line-height: 1; white-space: nowrap; margin: 0;
 }
 .promo__line { font-family: var(--ui); margin: 0; position: absolute; left: var(--inset); }
-.promo__line--soft { font-weight: 300; font-size: calc(var(--u)*4.6); color: rgba(251,250,247,.60);
+.promo__line--soft { font-weight: 300; font-size: calc(var(--u)*4.0); color: rgba(251,250,247,.60);
                      bottom: calc(var(--u)*9.5); }
-.promo__line--hard { font-weight: 500; font-size: calc(var(--u)*5.6); color: var(--cream);
+.promo__line--hard { font-weight: 500; font-size: calc(var(--u)*5.0); color: var(--cream);
                      bottom: calc(var(--u)*3.6); }
 
 /* ---------- Scroll reveal ---------- */
@@ -410,6 +406,41 @@ button { font: inherit; color: inherit; }
 }
 .js .card--light, .js .promo__photo--bottom { transition-delay: 80ms; }
 .js .card.is-in, .js .shot.is-in, .js .promo__photo.is-in { opacity: 1; transform: none; }
+
+/* ---------- Desktop ---------- */
+@media (min-width: 1024px) {
+  :root { --u: min(1vw, 16px); }          /* la página crece con la ventana y se topa */
+  .hero, .cards, .shot, .news, .promo { width: 100%; max-width: 1600px; margin-inline: auto; }
+  .cards { grid-template-columns: 1fr 1fr; }
+  .shot  { aspect-ratio: 21 / 9; }
+  .news .card--news { display: grid; grid-template-columns: 0.95fr 1.05fr; column-gap: calc(var(--u)*5); align-items: start; }
+  .news .card-news__title { margin-bottom: 0; grid-row: 1 / span 2; }
+  .news .card-news__text { margin-bottom: 0; grid-column: 2; max-width: none; }
+  .news .pill { grid-column: 2; justify-self: start; margin-top: calc(var(--u)*3); }
+  .promo { grid-template-columns: 1fr 1fr; }
+  .promo__photo { aspect-ratio: 4 / 5; }
+
+  .card, .shot, .promo__photo { border-radius: calc(var(--u) * 2); }
+  .card, .card--news { padding: calc(var(--u) * 7) var(--inset); }
+  .logo { font-size: calc(var(--u) * 1.6); }
+  .menu-btn { width: calc(var(--u) * 2.6); height: calc(var(--u) * 2.6); }
+  .bar { top: calc(var(--u) * 1.6); }
+  .stack { top: 14%; }
+  .wordmark { display: flex; justify-content: center; align-items: baseline; gap: calc(var(--u) * 4.2); white-space: nowrap; }
+  .wordmark .line { display: block; width: auto; margin: 0; }
+  .tagline { font-size: calc(var(--u) * 2.4); max-width: 48%; margin-top: 4.5vh; }
+  .meta, .cue span { font-size: calc(var(--u) * 1.5); }
+  .foot { bottom: max(calc(var(--u) * 2), 4vh); }
+  .card p { font-size: calc(var(--u) * 2.4); }
+  .card .card-news__text { font-size: calc(var(--u) * 2.0); }
+  .pill { font-size: calc(var(--u) * 1.5); padding: calc(var(--u) * .8) calc(var(--u) * 1.6); border-radius: calc(var(--u) * .9); }
+  .marquee__copy { font-size: calc(var(--u) * 14); }
+  .promo__line--soft { font-size: calc(var(--u) * 1.8); bottom: calc(var(--u) * 3.6); }
+  .promo__line--hard { font-size: calc(var(--u) * 2.2); bottom: calc(var(--u) * 1.6); }
+  .menu__inner { width: min(100%, 1600px); }
+  .menu__nav a { font-size: calc(var(--u) * 5); }
+  .menu__foot { font-size: calc(var(--u) * 1.2); }
+}
 
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
@@ -427,7 +458,7 @@ button { font: inherit; color: inherit; }
   <div class="hero__scrim"></div>
 
   <div class="bar">
-    <a class="logo" href="#" aria-label="coco latte" data-arc="0.4">coco latte</a>
+    <a class="logo" href="#" aria-label="coco latte">coco latte</a>
     <button class="menu-btn" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu"></button>
   </div>
 
@@ -492,7 +523,7 @@ button { font: inherit; color: inherit; }
 <div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menú">
   <div class="menu__inner">
     <div class="menu__top">
-      <a class="logo" href="#" aria-label="coco latte" data-arc="0.4">coco latte</a>
+      <a class="logo" href="#" aria-label="coco latte">coco latte</a>
       <button class="menu__close" type="button" aria-label="Cerrar menú"></button>
     </div>
     <nav class="menu__nav" aria-label="Principal">
@@ -530,97 +561,67 @@ button { font: inherit; color: inherit; }
 
   var frame = document.querySelector('.hero');
 
-  /* Arc: ends droop, middle rises. amp is the total excursion in px
-     (4.8% of the frame width); k scales it and the rotation. */
-  function arc(glyphs, host, k) {
-    var hr = host.getBoundingClientRect();
-    if (!hr.width) return;
-    var amp = frame.clientWidth * 0.048 * k;
-    var first = glyphs[0].getBoundingClientRect();
-    var last = glyphs[glyphs.length - 1].getBoundingClientRect();
-    var span = (last.left + last.width / 2) - (first.left + first.width / 2);
-    glyphs.forEach(function (g) {
-      var r = g.getBoundingClientRect();
-      /* t se normaliza entre el PRIMER y el ÚLTIMO glifo (±0,5), no sobre la caja
-         de la línea: así los extremos sí alcanzan la excursión completa del arco. */
-      var t = span ? ((r.left + r.width / 2) - (first.left + first.width / 2)) / span - 0.5 : 0;
-      var ty = amp * (1 - 4 * t * t) - amp / 2;      /* ends -amp/2, centre +amp/2 (up) */
-      g.style.transform = 'translateY(' + (-ty).toFixed(2) +
-        'px) rotate(' + (-8 * k * t).toFixed(3) + 'deg)';
-    });
+  /* Width of the widest line of an element's text at its current font size. */
+  function inkWidth(el) {
+    var r = document.createRange();
+    r.selectNodeContents(el);
+    return r.getBoundingClientRect().width;
   }
 
-  var ctx = document.createElement('canvas').getContext('2d');
+  /* Set el's font-size so its widest line is `target` px wide. */
+  function fitWidth(el, target) {
+    el.style.fontSize = '100px';
+    var w = inkWidth(el);
+    if (!w || !target) { el.style.fontSize = ''; return 0; }
+    var size = 100 * target / w;
+    el.style.fontSize = size.toFixed(2) + 'px';
+    return size;
+  }
 
-  /* ----- Giant wordmark ----- */
+  /* ----- Giant wordmark: same size on both lines, "latte" = 88% of width ----- */
   var h1 = document.querySelector('.wordmark');
+  var stack = document.querySelector('.stack');
   var lines = Array.prototype.slice.call(h1.querySelectorAll('.line'));
   var lineGlyphs = lines.map(function (l) { return wrap(l.firstElementChild, l.dataset.text); });
 
+  /* Desktop: one row; both lines + gap = 58% of the hero width, block <= 30% of viewport height. */
+  function fitRow() {
+    lines.forEach(function (l) { l.style.fontSize = '100px'; });
+    var w100 = lines.reduce(function (a, l) { return a + l.firstElementChild.getBoundingClientRect().width; }, 0);
+    if (!w100) { lines.forEach(function (l) { l.style.fontSize = ''; }); return; }
+    var gap = parseFloat(getComputedStyle(h1).columnGap) || 0;
+    var F = 100 * (0.58 * frame.clientWidth - gap) / w100;
+    F = Math.min(F, (window.innerHeight * 0.30) / 0.9);   /* single row, line-height 0.9 */
+    lines.forEach(function (l) { l.style.fontSize = F.toFixed(2) + 'px'; });
+  }
+
   function fit() {
-    var W = frame.clientWidth;
-    ctx.font = '100px "Bagel Fat One", cursive';
-    if ('letterSpacing' in ctx) ctx.letterSpacing = '0px';
-    var o = ctx.measureText('o');
-    var xH100 = o.actualBoundingBoxAscent + o.actualBoundingBoxDescent;
-    if (!xH100) return;
-    var F = 100 * (0.136 * W) / xH100;                    /* x-height = 13.6% of W */
-    lines.forEach(function (l, i) {
-      /* Glyphs are separate spans (no kerning) and each is rotated about its box
-         centre by the arc, so measure the rotated per-glyph ink, in 100px units. */
-      var sc = F / 100, ls = -1.5, chars = l.dataset.text.split('');
-      var adv = chars.map(function (ch) { return ctx.measureText(ch).width + ls; });
-      var A = adv.reduce(function (a, b) { return a + b; }, 0);
-      var inkL = Infinity, inkR = -Infinity, pos = 0;
-      chars.forEach(function (ch, j) {
-        var m = ctx.measureText(ch), cx = pos + adv[j] / 2;
-        var t = cx / A - 0.5, th = (-8 * t) * Math.PI / 180;
-        var mid = ((m.fontBoundingBoxAscent || 0) - (m.fontBoundingBoxDescent || 0)) / 2;
-        [-m.actualBoundingBoxLeft, m.actualBoundingBoxRight].forEach(function (xe) {
-          [m.actualBoundingBoxAscent - mid, -m.actualBoundingBoxDescent - mid].forEach(function (ye) {
-            var x = cx + (xe - adv[j] / 2) * Math.cos(th) + ye * Math.sin(th);
-            inkL = Math.min(inkL, x); inkR = Math.max(inkR, x);
-          });
-        });
-        pos += adv[j];
-      });
-      var inkW = (inkR - inkL) * sc;
-      if (inkW) {
-        var k = Math.min(1.6, Math.max(0.9, (0.876 * W) / inkW));   /* ink = 87.6% of W */
-        /* centre the ink on 5.9%..93.5% (centre 49.7%) */
-        var inkC = (inkR + inkL) / 2 * sc;
-        var dx = (0.497 - 0.5) * W - (inkC - A * sc / 2) * k;
-        l.style.fontSize = F.toFixed(2) + 'px';
-        l.style.transform = 'translateX(' + dx.toFixed(2) + 'px) scaleX(' + k.toFixed(4) + ')';
-      }
-      lineGlyphs[i].forEach(function (g) { g.style.transform = 'none'; });
-    });
-    lines.forEach(function (l, i) { arc(lineGlyphs[i], l.firstElementChild, 1); });
+    var desktop = window.innerWidth >= 1024;
+    if (desktop) { fitRow(); return; }
+    var avail = stack.clientWidth;
+    var longest = lines.reduce(function (a, b) { return b.dataset.text.length > a.dataset.text.length ? b : a; });
+    lines.forEach(function (l) { l.style.fontSize = '100px'; });
+    var w100 = longest.firstElementChild.getBoundingClientRect().width;
+    if (!w100) { lines.forEach(function (l) { l.style.fontSize = ''; }); return; }
+    var F = 100 * (0.88 * avail) / w100;
+    var cap = window.innerHeight * 0.42;
+    var block = 0.9 * lines.length;                      /* line-height 0.9 */
+    F = Math.min(F, cap / block);
+    lines.forEach(function (l) { l.style.fontSize = F.toFixed(2) + 'px'; });
   }
 
-  /* ----- Small logo ----- */
-  var logos = Array.prototype.slice.call(document.querySelectorAll('.logo')).map(function (a) {
-    return { el: a, glyphs: wrap(a, 'coco latte') };
-  });
-  function fitLogos() {
-    logos.forEach(function (l) {
-      l.glyphs.forEach(function (g) { g.style.transform = 'none'; });
-      arc(l.glyphs, l.el, 0.4);
-    });
+  /* ----- Titles that must fit a share of their container ----- */
+  var newsTitle = document.querySelector('.card-news__title');
+  var promoBig = document.querySelector('.promo__big');
+  function fitTitles() {
+    fitWidth(newsTitle, newsTitle.clientWidth * 0.92);
+    var cap = promoBig.parentElement;
+    var cs = getComputedStyle(cap);
+    var inner = cap.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    fitWidth(promoBig, Math.min(promoBig.parentElement.parentElement.clientWidth * 0.92, inner));
   }
 
-  /* ----- Marquee: arch each copy, normalised over its own glyphs ----- */
-  var copies = Array.prototype.slice.call(document.querySelectorAll('.marquee__copy')).map(function (c) {
-    return { el: c, glyphs: wrap(c, c.dataset.text.replace(/ /g, ' ')) };
-  });
-  function fitMarquee() {
-    copies.forEach(function (c) {
-      c.glyphs.forEach(function (g) { g.style.transform = 'none'; });
-      if (!reduce) arc(c.glyphs, c.el, 1);
-    });
-  }
-
-  function layout() { fit(); fitLogos(); fitMarquee(); }
+  function layout() { fit(); fitTitles(); }
   layout();
 
   var timer;
@@ -634,7 +635,7 @@ button { font: inherit; color: inherit; }
     intro();
   }
 
-  /* ----- Entrance (final arched transform stays as resting state) ----- */
+  /* ----- Entrance ----- */
   var played = false;
   function intro() {
     if (played) return;
@@ -642,10 +643,9 @@ button { font: inherit; color: inherit; }
     if (reduce || !Element.prototype.animate) return;
     lineGlyphs.forEach(function (gl) {
       gl.forEach(function (g, i) {
-        var rest = g.style.transform;
         g.animate([
           { transform: 'translateY(0.35em) scale(.86)', opacity: 0 },
-          { transform: rest, opacity: 1 }
+          { transform: 'none', opacity: 1 }
         ], { duration: 650, delay: i * 45, easing: EASE, fill: 'backwards' });
       });
     });
