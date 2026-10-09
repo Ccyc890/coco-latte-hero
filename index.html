@@ -54,9 +54,10 @@ button { font: inherit; color: inherit; }
 }
 .hero__img {
   position: absolute;
-  inset: 0;
+  left: 0;
+  top: -4%;
   width: 100%;
-  height: 100%;
+  height: 108%;
   object-fit: cover;
   object-position: center 32%;
   filter: brightness(.66) saturate(.9) contrast(1.06);
@@ -310,9 +311,10 @@ button { font: inherit; color: inherit; }
 }
 .shot img {
   position: absolute;
-  inset: 0;
+  left: 0;
+  top: -4%;
   width: 100%;
-  height: 100%;
+  height: 108%;
   object-fit: cover;
   object-position: center 42%;
   filter: brightness(.52) saturate(.9) contrast(1.06);
@@ -383,7 +385,7 @@ button { font: inherit; color: inherit; }
   position: relative; aspect-ratio: 1254 / 875; overflow: clip;
   border-radius: calc(var(--u)*3.5); background: var(--black); margin: 0;
 }
-.promo__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.promo__photo img { position: absolute; left: 0; top: -4%; width: 100%; height: 108%; object-fit: cover; }
 .promo__photo--top img { object-position: center 42%; filter: brightness(.94); }
 .promo__photo--bottom img { object-position: center 46%; filter: brightness(.72) contrast(1.04); }
 .promo__photo--bottom::after { content:""; position:absolute; inset:0; z-index:1; background: rgba(19,18,16,.30); }
@@ -445,6 +447,7 @@ button { font: inherit; color: inherit; }
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   .marquee__row { animation: none; }
+  .hero__img, .shot img, .promo__photo img { transform: none !important; }
   .js .card, .js .shot, .js .promo__photo { opacity: 1; transform: none; transition: none; }
   .cue__fill { animation: none; height: 55%; }
   .menu, .menu.is-open, .menu__nav a { transition: none; }
@@ -661,6 +664,40 @@ button { font: inherit; color: inherit; }
       });
     }, { threshold: 0.12 });
     revealEls.forEach(function (el) { io.observe(el); });
+  }
+
+  /* ----- Soft parallax on the four photos ----- */
+  var plx = [];
+  [['.hero', '.hero__img'], ['.shot', 'img'], ['.promo__photo--top', 'img'], ['.promo__photo--bottom', 'img']].forEach(function (pair) {
+    var f = document.querySelector(pair[0]);
+    var im = f && f.querySelector(pair[1]);
+    if (im) plx.push({ f: f, im: im });
+  });
+  if (!reduce && plx.length) {
+    var plxQueued = false;
+    var plxRun = function () {
+      plxQueued = false;
+      var vh = window.innerHeight, i, r, p, t, s;
+      var ys = [], rects = [];
+      for (i = 0; i < plx.length; i++) rects[i] = plx[i].f.getBoundingClientRect();   // read
+      for (i = 0; i < plx.length; i++) {
+        r = rects[i];
+        if (r.bottom < 0 || r.top > vh) { ys[i] = null; continue; }
+        p = Math.min(1, Math.max(0, (vh - r.top) / (vh + r.height)));
+        t = (p - 0.5) * 2;
+        s = t * (1 - 0.35 * t * t);
+        ys[i] = s * r.height * 0.035;
+      }
+      for (i = 0; i < plx.length; i++) {                                              // write
+        if (ys[i] !== null) plx[i].im.style.transform = 'translate3d(0,' + ys[i].toFixed(2) + 'px,0)';
+      }
+    };
+    var plxSchedule = function () {
+      if (!plxQueued) { plxQueued = true; requestAnimationFrame(plxRun); }
+    };
+    window.addEventListener('scroll', plxSchedule, { passive: true });
+    window.addEventListener('resize', plxSchedule);
+    plxSchedule();
   }
 
   /* ----- Live time, Europe/Madrid ----- */
