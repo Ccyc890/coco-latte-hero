@@ -57,9 +57,9 @@ button { font: inherit; color: inherit; }
 .hero__img {
   position: absolute;
   left: 0;
-  top: -7%;
+  top: -8%;
   width: 100%;
-  height: 114%;
+  height: 116%;
   object-fit: cover;
   object-position: center 32%;
   filter: brightness(.66) saturate(.9) contrast(1.06);
@@ -314,9 +314,9 @@ button { font: inherit; color: inherit; }
 .shot img {
   position: absolute;
   left: 0;
-  top: -7%;
+  top: -8%;
   width: 100%;
-  height: 114%;
+  height: 116%;
   object-fit: cover;
   object-position: center 42%;
   filter: brightness(.52) saturate(.9) contrast(1.06);
@@ -387,7 +387,7 @@ button { font: inherit; color: inherit; }
   position: relative; aspect-ratio: 1254 / 875; overflow: clip;
   border-radius: calc(var(--u)*3.5); background: var(--black); margin: 0;
 }
-.promo__photo img { position: absolute; left: 0; top: -7%; width: 100%; height: 114%; object-fit: cover; }
+.promo__photo img { position: absolute; left: 0; top: -8%; width: 100%; height: 116%; object-fit: cover; }
 .promo__photo--top img { object-position: center 42%; filter: brightness(.94); }
 .promo__photo--bottom img { object-position: center 46%; filter: brightness(.72) contrast(1.04); }
 .promo__photo--bottom::after { content:""; position:absolute; inset:0; z-index:1; background: rgba(19,18,16,.30); }
@@ -416,7 +416,7 @@ button { font: inherit; color: inherit; }
 }
 .float__blob { position: absolute; left: 12%; right: 14%; top: 7%; bottom: 6%; border-radius: 50% / 46%; background: #E7E3D9; }
 .float__title {
-  position: absolute; z-index: 1; left: 34%; width: 32%; top: 11%; margin: 0; text-align: center;
+  position: absolute; z-index: 1; left: 34%; width: 32%; top: 50%; transform: translateY(-50%); margin: 0; text-align: center;
   font-family: var(--display); font-weight: 400; color: var(--black);
   font-size: calc(var(--u)*4.9); line-height: 1.06; letter-spacing: -0.01em;
 }
@@ -466,7 +466,7 @@ button { font: inherit; color: inherit; }
   .card, .shot, .promo__photo, .float { border-radius: calc(var(--u) * 2); }
   .float { aspect-ratio: 16 / 9; }
   .float__blob { left: 20%; right: 22%; top: 8%; bottom: 8%; }
-  .float__title { left: 27%; width: 26%; top: 18%; font-size: calc(var(--u)*3.2); }
+  .float__title { left: 27%; width: 26%; font-size: calc(var(--u)*3.2); }
   .float__item--a { left: 62%; top: 4%;  width: 20%; }
   .float__item--b { left: 6%;  top: 21%; width: 19%; }
   .float__item--c { left: 55%; top: 64%; width: 20%; }
@@ -535,6 +535,23 @@ button { font: inherit; color: inherit; }
   </div>
 </header>
 
+<section class="float" id="flotantes" aria-label="coco latte, en imágenes">
+  <div class="float__blob" aria-hidden="true"></div>
+  <h2 class="float__title">cuando<br>algo ya<br>está bien<br>hecho,<br>no lo<br>cambiamos:<br>lo mostramos.</h2>
+
+  <figure class="float__item float__item--a" data-float="-7">
+    <img src="img/takeaway-cup.jpg" alt="Café para llevar de coco latte" loading="lazy" decoding="async">
+    <figcaption>el café no se inventa. se respeta.</figcaption>
+  </figure>
+  <figure class="float__item float__item--b" data-float="-10">
+    <img src="img/interior.jpg" alt="Interior del local coco latte" loading="lazy" decoding="async">
+    <figcaption>coco latte no existe para reinventar, sino para respetar.</figcaption>
+  </figure>
+  <figure class="float__item float__item--c" data-float="-13">
+    <img src="img/hero-cup.jpg" alt="Café de especialidad de coco latte" loading="lazy" decoding="async">
+  </figure>
+</section>
+
 <div class="cards" id="carta">
   <section class="card card--dark"><p>café cuando lo necesitas, comida cuando tienes hambre, algo dulce porque obviamente, y un sitio agradable donde estar mientras el día se aclara.</p></section>
   <section class="card card--light"><p>café de especialidad, molienda fresca, tueste cuidado, origen con criterio, quien es del café lo entiende. los demás se toman un café buenísimo.</p></section>
@@ -571,23 +588,6 @@ button { font: inherit; color: inherit; }
     </figcaption>
   </figure>
 </div>
-
-<section class="float" id="flotantes" aria-label="coco latte, en imágenes">
-  <div class="float__blob" aria-hidden="true"></div>
-  <h2 class="float__title">cuando<br>algo ya<br>está bien<br>hecho,<br>no lo<br>cambiamos:<br>lo mostramos.</h2>
-
-  <figure class="float__item float__item--a" data-float="-6">
-    <img src="img/takeaway-cup.jpg" alt="Café para llevar de coco latte" loading="lazy" decoding="async">
-    <figcaption>el café no se inventa. se respeta.</figcaption>
-  </figure>
-  <figure class="float__item float__item--b" data-float="-9">
-    <img src="img/interior.jpg" alt="Interior del local coco latte" loading="lazy" decoding="async">
-    <figcaption>coco latte no existe para reinventar, sino para respetar.</figcaption>
-  </figure>
-  <figure class="float__item float__item--c" data-float="-12">
-    <img src="img/hero-cup.jpg" alt="Café de especialidad de coco latte" loading="lazy" decoding="async">
-  </figure>
-</section>
 
 <div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menú">
   <div class="menu__inner">
@@ -754,7 +754,7 @@ button { font: inherit; color: inherit; }
         p = Math.min(1, Math.max(0, (vh - r.top) / (vh + r.height)));
         t = (p - 0.5) * 2;
         s = t * (1 - 0.35 * t * t);
-        ys[i] = s * r.height * 0.07;
+        ys[i] = s * r.height * 0.08;
       }
       for (i = 0; i < plx.length; i++) {                                              // write
         if (ys[i] !== null) plx[i].im.style.transform = 'translate3d(0,' + ys[i].toFixed(2) + 'px,0)';
