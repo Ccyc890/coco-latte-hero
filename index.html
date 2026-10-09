@@ -22,6 +22,7 @@
   --gutter: calc(var(--u) * 3.2);
   --inset: calc(var(--u) * 3.6);   /* single horizontal inset */
   --page-gutter: clamp(12px, 3.4vw, 48px);
+  --page-gutter-x: calc(var(--page-gutter) / 2);
 }
 @media (min-width: 768px) {
   :root { --u: 4.8px; }       /* frame capped at 480px */
@@ -51,7 +52,7 @@ button { font: inherit; color: inherit; }
   z-index: 0;
   height: 100vh;
   height: 100svh;
-  width: min(calc(100% - 2 * var(--page-gutter)), 480px);
+  width: min(calc(100% - 2 * var(--page-gutter-x)), 480px);
   margin: calc(var(--page-gutter) * .75) auto 0;
   border-radius: calc(var(--u) * 3.5);
   overflow: clip;
@@ -286,10 +287,10 @@ button { font: inherit; color: inherit; }
 
 /* ---------- Text cards ---------- */
 .cards, .shot, .news, .promo, .float {
-  width: min(calc(100% - 2 * var(--page-gutter)), 480px);
+  width: min(calc(100% - 2 * var(--page-gutter-x)), 480px);
   margin: calc(var(--u) * 1.5) auto 0;
 }
-.cards { display: grid; gap: calc(var(--u) * 1.5); }
+.cards { display: grid; gap: calc(var(--u) * 1.5); position: relative; z-index: 1; background: var(--cream-dark); }
 .card {
   border-radius: calc(var(--u) * 3.5);
   padding: calc(var(--u) * 13) var(--inset);
@@ -407,7 +408,7 @@ button { font: inherit; color: inherit; }
 
 /* ---------- Flotantes ---------- */
 .float {
-  position: relative; z-index: 1; overflow: clip; container-type: size;
+  position: relative; overflow: clip; container-type: size;
   aspect-ratio: 1252 / 1759; min-height: 150svh;
   margin-bottom: calc(var(--u) * 3.5);
   border-radius: calc(var(--u) * 3.5);
@@ -455,7 +456,7 @@ button { font: inherit; color: inherit; }
 /* ---------- Desktop ---------- */
 @media (min-width: 1024px) {
   :root { --u: min(1vw, 16px); }          /* la página crece con la ventana y se topa */
-  .hero, .cards, .shot, .news, .promo, .float { width: min(calc(100% - 2 * var(--page-gutter)), 1600px); margin-inline: auto; }
+  .hero, .cards, .shot, .news, .promo, .float { width: min(calc(100% - 2 * var(--page-gutter-x)), 1600px); margin-inline: auto; }
   .hero { margin-top: calc(var(--page-gutter) * .75); border-radius: calc(var(--u) * 2); }
   .cards { grid-template-columns: 1fr 1fr; }
   .shot  { aspect-ratio: 21 / 9; }
@@ -540,6 +541,12 @@ button { font: inherit; color: inherit; }
   </div>
 </header>
 
+<div class="cards" id="carta">
+  <section class="card card--dark"><p>café cuando lo necesitas, comida cuando tienes hambre, algo dulce porque obviamente, y un sitio agradable donde estar mientras el día se aclara.</p></section>
+  <section class="card card--light"><p>café de especialidad, molienda fresca, tueste cuidado, origen con criterio, quien es del café lo entiende. los demás se toman un café buenísimo.</p></section>
+</div>
+</div>
+
 <section class="float" id="flotantes" aria-label="coco latte, en imágenes">
   <div class="float__blob" aria-hidden="true"></div>
   <h2 class="float__title">cuando<br>algo ya<br>está bien<br>hecho,<br>no lo<br>cambiamos:<br>lo mostramos.</h2>
@@ -556,12 +563,6 @@ button { font: inherit; color: inherit; }
     <img src="img/hero-cup.jpg" alt="Café de especialidad de coco latte" loading="lazy" decoding="async">
   </figure>
 </section>
-</div>
-
-<div class="cards" id="carta">
-  <section class="card card--dark"><p>café cuando lo necesitas, comida cuando tienes hambre, algo dulce porque obviamente, y un sitio agradable donde estar mientras el día se aclara.</p></section>
-  <section class="card card--light"><p>café de especialidad, molienda fresca, tueste cuidado, origen con criterio, quien es del café lo entiende. los demás se toman un café buenísimo.</p></section>
-</div>
 
 <section class="shot" id="galeria" aria-label="coco latte, el local">
   <img src="img/interior.jpg" alt="Interior del local coco latte en Bilbao" loading="lazy" decoding="async">
