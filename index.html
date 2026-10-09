@@ -8,7 +8,7 @@
 <meta name="theme-color" content="#131210">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;700&family=Bagel+Fat+One&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;700&family=Oswald:wght@300;400;500;700&family=Bagel+Fat+One&display=swap" rel="stylesheet">
 <style>
 /* ---------- Tokens ---------- */
 :root {
@@ -17,9 +17,10 @@
   --cream-dark: #F1EFE9;      /* page slab showing between the cards */
   --cream-soft: rgba(251, 250, 247, .35);
   --display: "Bagel Fat One", "Titan One", cursive;
-  --ui: "Archivo Narrow", "Arial Narrow", sans-serif;
+  --ui: "Oswald", "Archivo Narrow", "Arial Narrow", sans-serif;
   --u: 1vw;                   /* 1% of the frame width */
   --gutter: calc(var(--u) * 3.2);
+  --inset: calc(var(--u) * 3.6);   /* single horizontal inset */
 }
 @media (min-width: 768px) {
   :root { --u: 4.8px; }       /* frame capped at 480px */
@@ -280,14 +281,14 @@ button { font: inherit; color: inherit; }
 }
 
 /* ---------- Text cards ---------- */
-.cards, .shot {
+.cards, .shot, .news, .promo {
   width: min(100%, 480px);
   margin: calc(var(--u) * 1.5) auto 0;
 }
 .cards { display: grid; gap: calc(var(--u) * 1.5); }
 .card {
   border-radius: calc(var(--u) * 3.5);
-  padding: calc(var(--u) * 13) calc(var(--u) * 5.5);
+  padding: calc(var(--u) * 13) var(--inset);
 }
 .card p {
   font-family: var(--ui);
@@ -352,19 +353,68 @@ button { font: inherit; color: inherit; }
 .marquee__copy .g { display: inline-block; }
 @keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
+/* ---------- Novedades ---------- */
+.card--news { background: var(--black); color: var(--cream); padding: calc(var(--u)*13) var(--inset); }
+.card-news__title {
+  font-family: var(--ui); font-weight: 400;
+  font-size: calc(var(--u) * 21); line-height: 1.28; letter-spacing: -0.01em;
+  margin: 0 0 calc(var(--u)*6); white-space: nowrap;
+}
+.card .card-news__text {
+  font-family: var(--ui); font-weight: 300;
+  font-size: calc(var(--u) * 4.9); line-height: 1.18; text-wrap: pretty;
+  max-width: 90%; margin: 0 0 calc(var(--u)*9);
+}
+.pill {
+  position: relative; display: inline-flex; align-items: center; gap: calc(var(--u)*2);
+  font-family: var(--ui); font-weight: 400; font-size: calc(var(--u)*5);
+  color: var(--cream); text-decoration: none; white-space: nowrap;
+  padding: calc(var(--u)*2.4) calc(var(--u)*4.4);
+  border-radius: calc(var(--u)*2.4);
+  background: rgba(241, 239, 233, 0.22);
+}
+.pill::after {
+  content: ""; position: absolute; inset: 0;
+  transform: translate(calc(var(--u)*0.9), calc(var(--u)*0.9));
+  border: 1.5px solid var(--cream); border-radius: inherit; pointer-events: none;
+}
+.news { margin: calc(var(--u) * 1.5) auto 0; }
+.news .card { margin: 0; }
+
+/* ---------- Promo ---------- */
+.promo { display: grid; gap: calc(var(--u)*2.6); margin: calc(var(--u) * 2.6) auto calc(var(--u) * 3.5); }
+.promo__photo {
+  position: relative; aspect-ratio: 1254 / 875; overflow: clip;
+  border-radius: calc(var(--u)*3.5); background: var(--black); margin: 0;
+}
+.promo__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.promo__photo--top img { object-position: center 42%; filter: brightness(.94); }
+.promo__photo--bottom img { object-position: center 46%; filter: brightness(.72) contrast(1.04); }
+.promo__photo--bottom::after { content:""; position:absolute; inset:0; z-index:1; background: rgba(19,18,16,.30); }
+.promo__caption { position: absolute; z-index: 2; inset: 0; padding: var(--inset); }
+.promo__big {
+  font-family: var(--ui); font-weight: 400; color: var(--cream);
+  font-size: calc(var(--u)*8.5); line-height: 1; white-space: nowrap; margin: 0;
+}
+.promo__line { font-family: var(--ui); margin: 0; position: absolute; left: var(--inset); }
+.promo__line--soft { font-weight: 300; font-size: calc(var(--u)*4.6); color: rgba(251,250,247,.60);
+                     bottom: calc(var(--u)*9.5); }
+.promo__line--hard { font-weight: 500; font-size: calc(var(--u)*5.6); color: var(--cream);
+                     bottom: calc(var(--u)*3.6); }
+
 /* ---------- Scroll reveal ---------- */
-.js .card, .js .shot {
+.js .card, .js .shot, .js .promo__photo {
   opacity: 0;
   transform: translateY(18px);
   transition: opacity 700ms cubic-bezier(0.22,1,0.36,1), transform 700ms cubic-bezier(0.22,1,0.36,1);
 }
-.js .card--light { transition-delay: 80ms; }
-.js .card.is-in, .js .shot.is-in { opacity: 1; transform: none; }
+.js .card--light, .js .promo__photo--bottom { transition-delay: 80ms; }
+.js .card.is-in, .js .shot.is-in, .js .promo__photo.is-in { opacity: 1; transform: none; }
 
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   .marquee__row { animation: none; }
-  .js .card, .js .shot { opacity: 1; transform: none; transition: none; }
+  .js .card, .js .shot, .js .promo__photo { opacity: 1; transform: none; transition: none; }
   .cue__fill { animation: none; height: 55%; }
   .menu, .menu.is-open, .menu__nav a { transition: none; }
 }
@@ -416,6 +466,28 @@ button { font: inherit; color: inherit; }
     </div>
   </div>
 </section>
+
+<div class="news">
+  <section class="card card--news" id="novedades">
+    <h2 class="card-news__title">nuevo esta<br>semana</h2>
+    <p class="card-news__text">cambian las cartas, llegan cosas nuevas, pasan planes, algunas cosas desaparecen rápido — aquí dejamos constancia de lo que está pasando ahora mismo en coco latte.</p>
+    <a class="pill" href="#promo">explorar el tablón<span class="pill__arrow" aria-hidden="true">›</span></a>
+  </section>
+</div>
+
+<div class="promo" id="promo">
+  <figure class="promo__photo promo__photo--top">
+    <img src="img/counter.jpg" alt="Barra de coco latte con la máquina de espresso" loading="lazy" decoding="async">
+  </figure>
+  <figure class="promo__photo promo__photo--bottom">
+    <img src="img/hero-cup.jpg" alt="Café de especialidad servido en coco latte" loading="lazy" decoding="async">
+    <figcaption class="promo__caption">
+      <p class="promo__big">comparte si te portas bien</p>
+      <p class="promo__line promo__line--soft">cafés fríos clásicos</p>
+      <p class="promo__line promo__line--hard">2 por 10 €</p>
+    </figcaption>
+  </figure>
+</div>
 
 <div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menú">
   <div class="menu__inner">
@@ -580,7 +652,7 @@ button { font: inherit; color: inherit; }
   }
 
   /* ----- Reveal on scroll (once) ----- */
-  var revealEls = document.querySelectorAll('.card, .shot');
+  var revealEls = document.querySelectorAll('.card, .shot, .promo__photo');
   if ('IntersectionObserver' in window) {
     document.documentElement.classList.add('js');
     var io = new IntersectionObserver(function (entries) {
