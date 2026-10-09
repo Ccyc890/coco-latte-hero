@@ -44,8 +44,11 @@ a { color: inherit; }
 button { font: inherit; color: inherit; }
 
 /* ---------- Hero frame ---------- */
+.hero-stack { position: relative; isolation: isolate; }
 .hero {
-  position: relative;
+  position: sticky;
+  top: calc(var(--page-gutter) * .75);
+  z-index: 0;
   height: 100vh;
   height: 100svh;
   width: min(calc(100% - 2 * var(--page-gutter)), 480px);
@@ -404,7 +407,7 @@ button { font: inherit; color: inherit; }
 
 /* ---------- Flotantes ---------- */
 .float {
-  position: relative; overflow: clip; container-type: size;
+  position: relative; z-index: 1; overflow: clip; container-type: size;
   aspect-ratio: 1252 / 1759; min-height: 150svh;
   margin-bottom: calc(var(--u) * 3.5);
   border-radius: calc(var(--u) * 3.5);
@@ -441,13 +444,13 @@ button { font: inherit; color: inherit; }
   transform: translateY(18px);
   transition: opacity 700ms cubic-bezier(0.22,1,0.36,1), transform 700ms cubic-bezier(0.22,1,0.36,1);
 }
-.js .shot, .js .promo__photo, .js .float {
+.js .shot, .js .promo__photo {
   opacity: 0;
   transition: opacity 700ms cubic-bezier(0.22,1,0.36,1);
 }
 .js .card--light, .js .promo__photo--bottom { transition-delay: 80ms; }
 .js .card.is-in { opacity: 1; transform: none; }
-.js .shot.is-in, .js .promo__photo.is-in, .js .float.is-in { opacity: 1; }
+.js .shot.is-in, .js .promo__photo.is-in { opacity: 1; }
 
 /* ---------- Desktop ---------- */
 @media (min-width: 1024px) {
@@ -496,8 +499,9 @@ button { font: inherit; color: inherit; }
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   .marquee__row { animation: none; }
+  .hero { position: relative; top: auto; z-index: auto; }
   .hero__img, .shot img, .promo__photo img, .float__item { transform: none !important; }
-  .js .card, .js .shot, .js .promo__photo, .js .float { opacity: 1; transform: none; transition: none; }
+  .js .card, .js .shot, .js .promo__photo { opacity: 1; transform: none; transition: none; }
   .cue__fill { animation: none; height: 55%; }
   .menu, .menu.is-open, .menu__nav a { transition: none; }
 }
@@ -505,6 +509,7 @@ button { font: inherit; color: inherit; }
 </head>
 <body>
 
+<div class="hero-stack">
 <header class="hero">
   <img class="hero__img" src="img/takeaway-cup.jpg" alt="Taza de café de especialidad con espuma de leche sobre mármol claro" fetchpriority="high">
   <div class="hero__scrim"></div>
@@ -551,6 +556,7 @@ button { font: inherit; color: inherit; }
     <img src="img/hero-cup.jpg" alt="Café de especialidad de coco latte" loading="lazy" decoding="async">
   </figure>
 </section>
+</div>
 
 <div class="cards" id="carta">
   <section class="card card--dark"><p>café cuando lo necesitas, comida cuando tienes hambre, algo dulce porque obviamente, y un sitio agradable donde estar mientras el día se aclara.</p></section>
@@ -721,7 +727,7 @@ button { font: inherit; color: inherit; }
   }
 
   /* ----- Reveal on scroll (once) ----- */
-  var revealEls = document.querySelectorAll('.card, .shot, .promo__photo, .float');
+  var revealEls = document.querySelectorAll('.card, .shot, .promo__photo');
   if ('IntersectionObserver' in window) {
     document.documentElement.classList.add('js');
     var io = new IntersectionObserver(function (entries) {
