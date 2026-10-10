@@ -45,10 +45,10 @@ a { color: inherit; }
 button { font: inherit; color: inherit; }
 
 /* ---------- Hero frame ---------- */
-.hero-stack { position: relative; isolation: isolate; }
+.hero-stack { position: relative; }
 .hero {
-  position: sticky;
-  top: calc(var(--page-gutter) * .75);
+  position: relative;
+  top: 0;
   z-index: 0;
   height: 100vh;
   height: 100svh;
@@ -309,9 +309,8 @@ button { font: inherit; color: inherit; }
 /* ---------- Photo card with marquee ---------- */
 .shot {
   position: relative;
-  z-index: 1;
   aspect-ratio: 1254 / 1342;
-  min-height: 100svh;            /* tall enough to cover the sticky hero completely */
+  min-height: 0;
   border-radius: calc(var(--u) * 3.5);
   overflow: clip;
   background: var(--black);
@@ -461,7 +460,7 @@ button { font: inherit; color: inherit; }
   .hero, .cards, .shot, .news, .promo, .float { width: min(calc(100% - 2 * var(--page-gutter-x)), 1600px); margin-inline: auto; }
   .hero { margin-top: calc(var(--page-gutter) * .75); border-radius: calc(var(--u) * 2); }
   .cards { grid-template-columns: 1fr 1fr; }
-  .shot  { aspect-ratio: 21 / 9; }
+  .shot  { aspect-ratio: 21 / 9; min-height: 0; }
   .news .card--news { display: grid; grid-template-columns: 0.95fr 1.05fr; column-gap: calc(var(--u)*5); align-items: start; }
   .news .card-news__title { margin-bottom: 0; grid-row: 1 / span 2; }
   .news .card-news__text { margin-bottom: 0; grid-column: 2; max-width: none; }
@@ -750,13 +749,7 @@ button { font: inherit; color: inherit; }
   });
   var floats = Array.prototype.slice.call(document.querySelectorAll('.float__item'));
   var floatSec = document.getElementById('flotantes');
-  var heroStack = document.querySelector('.hero-stack');
-  var heroEl = document.querySelector('.hero');
-  var stackTop0 = heroStack ? window.scrollY + heroStack.getBoundingClientRect().top : 0; // document-relative: immune to scroll restoration and margin collapse
-  var tagline = document.querySelector('.tagline');
-  var taglineY = 0;
-  var wordmark = document.querySelector('.wordmark');
-  if (!reduce && (plx.length || floats.length || tagline)) {
+  if (!reduce && (plx.length || floats.length)) {
     var plxQueued = false;
     var plxRun = function () {
       plxQueued = false;
@@ -773,20 +766,6 @@ button { font: inherit; color: inherit; }
       }
       for (i = 0; i < plx.length; i++) {                                              // write
         if (ys[i] !== null) plx[i].im.style.transform = 'translate3d(0,' + ys[i].toFixed(2) + 'px,0)';
-      }
-      if (tagline && heroStack && heroEl) {                                           // tagline: floats through the hero's sticky pin window
-        var sr = heroStack.getBoundingClientRect();                                   // read (the tagline is pinned by the sticky hero, so its own rect never moves)
-        var pin = Math.max(1, sr.height - heroEl.getBoundingClientRect().height);
-        if (sr.bottom >= 0 && sr.top <= vh) {
-          p = Math.min(1, Math.max(0, (stackTop0 - sr.top) / pin));                    // 0 at rest, 1 when the pin window is spent
-          var travelT = p * (1 - 0.35 * p) / 0.65;                                     // monotonic ease: 0 at rest, 1 at end of pin
-          var tr = tagline.getBoundingClientRect();                                    // read
-          var restTop = tr.top - taglineY;                                             // untransformed top
-          var maxUp = 0;
-          if (wordmark) maxUp = Math.max(0, Math.min(tr.height * 0.60, restTop - wordmark.getBoundingClientRect().bottom - 8));
-          taglineY = -travelT * maxUp;                                                 // only rises (≤0), stops 8px below the slogan
-          tagline.style.transform = 'translate3d(0,' + taglineY.toFixed(2) + 'px,0)';  // write
-        }
       }
       if (floatSec) {                                                                 // flotantes: one section rect, per-tile factor
         var fr = floatSec.getBoundingClientRect();                                    // read
