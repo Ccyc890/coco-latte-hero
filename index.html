@@ -309,6 +309,7 @@ button { font: inherit; color: inherit; }
 /* ---------- Photo card with marquee ---------- */
 .shot {
   position: relative;
+  z-index: 1;
   aspect-ratio: 1254 / 1342;
   border-radius: calc(var(--u) * 3.5);
   overflow: clip;
@@ -408,7 +409,7 @@ button { font: inherit; color: inherit; }
 
 /* ---------- Flotantes ---------- */
 .float {
-  position: relative; z-index: 1; overflow: clip; container-type: size;
+  position: relative; overflow: clip; container-type: size;
   aspect-ratio: 1252 / 1759; min-height: 150svh;
   margin-bottom: calc(var(--u) * 3.5);
   border-radius: calc(var(--u) * 3.5);
@@ -445,13 +446,13 @@ button { font: inherit; color: inherit; }
   transform: translateY(18px);
   transition: opacity 700ms cubic-bezier(0.22,1,0.36,1), transform 700ms cubic-bezier(0.22,1,0.36,1);
 }
-.js .shot, .js .promo__photo {
+.js .promo__photo {
   opacity: 0;
   transition: opacity 700ms cubic-bezier(0.22,1,0.36,1);
 }
 .js .card--light, .js .promo__photo--bottom { transition-delay: 80ms; }
 .js .card.is-in { opacity: 1; transform: none; }
-.js .shot.is-in, .js .promo__photo.is-in { opacity: 1; }
+.js .promo__photo.is-in { opacity: 1; }
 
 /* ---------- Desktop ---------- */
 @media (min-width: 1024px) {
@@ -502,7 +503,7 @@ button { font: inherit; color: inherit; }
   .marquee__row { animation: none; }
   .hero { position: relative; top: auto; z-index: auto; }
   .hero__img, .shot img, .promo__photo img, .float__item, .tagline { transform: none !important; }
-  .js .card, .js .shot, .js .promo__photo { opacity: 1; transform: none; transition: none; }
+  .js .card, .js .promo__photo { opacity: 1; transform: none; transition: none; }
   .cue__fill { animation: none; height: 55%; }
   .menu, .menu.is-open, .menu__nav a { transition: none; }
 }
@@ -541,6 +542,17 @@ button { font: inherit; color: inherit; }
   </div>
 </header>
 
+<section class="shot" id="galeria" aria-label="coco latte, el local">
+  <img src="img/interior.jpg" alt="Interior del local coco latte en Bilbao" loading="lazy" decoding="async">
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__row">
+      <span class="marquee__copy" data-text="coco latte · coco latte · coco latte · coco latte · ">coco latte · coco latte · coco latte · coco latte · </span>
+      <span class="marquee__copy" data-text="coco latte · coco latte · coco latte · coco latte · " aria-hidden="true">coco latte · coco latte · coco latte · coco latte · </span>
+    </div>
+  </div>
+</section>
+</div>
+
 <section class="float" id="flotantes" aria-label="coco latte, en imágenes">
   <div class="float__blob" aria-hidden="true"></div>
   <h2 class="float__title">cuando<br>algo ya<br>está bien<br>hecho,<br>no lo<br>cambiamos:<br>lo mostramos.</h2>
@@ -557,22 +569,11 @@ button { font: inherit; color: inherit; }
     <img src="img/hero-cup.jpg" alt="Café de especialidad de coco latte" loading="lazy" decoding="async">
   </figure>
 </section>
-</div>
 
 <div class="cards" id="carta">
   <section class="card card--dark"><p>café cuando lo necesitas, comida cuando tienes hambre, algo dulce porque obviamente, y un sitio agradable donde estar mientras el día se aclara.</p></section>
   <section class="card card--light"><p>café de especialidad, molienda fresca, tueste cuidado, origen con criterio, quien es del café lo entiende. los demás se toman un café buenísimo.</p></section>
 </div>
-
-<section class="shot" id="galeria" aria-label="coco latte, el local">
-  <img src="img/interior.jpg" alt="Interior del local coco latte en Bilbao" loading="lazy" decoding="async">
-  <div class="marquee" aria-hidden="true">
-    <div class="marquee__row">
-      <span class="marquee__copy" data-text="coco latte · coco latte · coco latte · coco latte · ">coco latte · coco latte · coco latte · coco latte · </span>
-      <span class="marquee__copy" data-text="coco latte · coco latte · coco latte · coco latte · " aria-hidden="true">coco latte · coco latte · coco latte · coco latte · </span>
-    </div>
-  </div>
-</section>
 
 <div class="news">
   <section class="card card--news" id="novedades">
@@ -728,7 +729,7 @@ button { font: inherit; color: inherit; }
   }
 
   /* ----- Reveal on scroll (once) ----- */
-  var revealEls = document.querySelectorAll('.card, .shot, .promo__photo');
+  var revealEls = document.querySelectorAll('.card, .promo__photo');
   if ('IntersectionObserver' in window) {
     document.documentElement.classList.add('js');
     var io = new IntersectionObserver(function (entries) {
@@ -749,6 +750,8 @@ button { font: inherit; color: inherit; }
   var floats = Array.prototype.slice.call(document.querySelectorAll('.float__item'));
   var floatSec = document.getElementById('flotantes');
   var heroStack = document.querySelector('.hero-stack');
+  var heroEl = document.querySelector('.hero');
+  var stackTop0 = heroStack ? heroStack.offsetTop : 0;                               // document-relative: immune to scroll restoration at load
   var tagline = document.querySelector('.tagline');
   var taglineY = 0;
   if (!reduce && (plx.length || floats.length || tagline)) {
@@ -769,13 +772,14 @@ button { font: inherit; color: inherit; }
       for (i = 0; i < plx.length; i++) {                                              // write
         if (ys[i] !== null) plx[i].im.style.transform = 'translate3d(0,' + ys[i].toFixed(2) + 'px,0)';
       }
-      if (tagline && heroStack) {
-        var sr = heroStack.getBoundingClientRect();                                   // read (tagline is pinned by the sticky hero, so its own rect barely moves)
+      if (tagline && heroStack && heroEl) {                                           // tagline: floats through the hero's sticky pin window
+        var sr = heroStack.getBoundingClientRect();                                   // read (the tagline is pinned by the sticky hero, so its own rect never moves)
+        var pin = Math.max(1, sr.height - heroEl.getBoundingClientRect().height);
         if (sr.bottom >= 0 && sr.top <= vh) {
-          p = Math.min(1, Math.max(0, (vh - sr.top) / (vh + sr.height)));
+          p = Math.min(1, Math.max(0, (stackTop0 - sr.top) / pin));                    // 0 at rest, 1 when the pin window is spent
           t = (p - 0.5) * 2;
           s = t * (1 - 0.35 * t * t);
-          taglineY = s * tagline.getBoundingClientRect().height * 0.18;
+          taglineY = -s * tagline.getBoundingClientRect().height * 0.22;               // negative: drifts UP as the page scrolls down
           tagline.style.transform = 'translate3d(0,' + taglineY.toFixed(2) + 'px,0)';  // write
         }
       }
